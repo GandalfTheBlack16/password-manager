@@ -2,13 +2,13 @@ import UserEntity from "../models/user-entity.js";
 
 export class UserRepository {
     
-    private userList: UserEntity[] = [];
+    private _userList: UserEntity[] = [];
 
     createUser(user: UserEntity): boolean{
         if (this.getUserByUsername(user.username)){
             return false;
         }
-        this.userList.push(user);
+        this._userList.push(user);
         return true;
     }
 
@@ -17,6 +17,10 @@ export class UserRepository {
     }
 
     private getUserByUsername(username: string): UserEntity | undefined{
-        return this.userList.find(i => i.username === username);
+        return this._userList.find(i => i.username === username);
+    }
+    
+    public get userList(): UserEntity[]{
+        return this._userList;
     }
 }
