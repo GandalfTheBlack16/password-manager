@@ -2,8 +2,10 @@ import express, { Express, json, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import { logger } from '@password-manager/commons';
 import { signup } from './services/signup-service.js';
-import UserCreationResult from './models/user-creation-result.js';
+import UserCreationResult from './models/messages/user-creation-result.js';
+import { connect } from 'mongoose';
 
+const MONGO_URI = process.env.MONGODB ?? 'mongodb://127.0.0.1:27017/test';
 const PORT = process.env.PORT ?? 3000;
 
 const app: Express = express();
@@ -23,6 +25,7 @@ app.post(
         res.json({ result });
 });
 
-app.listen(PORT as number, () => {
+app.listen(PORT as number, async () => {
+    await connect(MONGO_URI);
     logger.info(`Authentication service running on port ${PORT}`);
 });

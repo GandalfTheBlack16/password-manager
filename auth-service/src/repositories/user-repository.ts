@@ -1,26 +1,18 @@
 import UserEntity from "../models/user-entity.js";
+import { User } from "../models/user-model.js";
 
-export class UserRepository {
-    
-    private _userList: UserEntity[] = [];
+export async function createUser(user: UserEntity): Promise<boolean>{
+    if (await getUserByUsername(user.username)){
+        return false;
+    }
+    await new User(user).save();
+    return true;
+}
 
-    createUser(user: UserEntity): boolean{
-        if (this.getUserByUsername(user.username)){
-            return false;
-        }
-        this._userList.push(user);
-        return true;
-    }
+export async function findUserByUsername(username: string): Promise<UserEntity | null> {
+    return await getUserByUsername(username);
+}
 
-    findUserByUsername(username: string): UserEntity | undefined {
-        return this.getUserByUsername(username);
-    }
-
-    private getUserByUsername(username: string): UserEntity | undefined{
-        return this._userList.find(i => i.username === username);
-    }
-    
-    public get userList(): UserEntity[]{
-        return this._userList;
-    }
+async function getUserByUsername(username: string): Promise<UserEntity | null>{
+    return await User.findOne({ username });
 }

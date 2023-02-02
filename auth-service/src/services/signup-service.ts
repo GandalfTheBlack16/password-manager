@@ -1,9 +1,7 @@
 import bcrypt from 'bcrypt';
-import UserCreationResult, { StatusEnum } from "../models/user-creation-result.js";
-import UserEntity from '../models/user-entity.js';
-import { UserRepository } from "../repositories/user-repository.js";
+import UserCreationResult, { StatusEnum } from "../models/messages/user-creation-result.js";
+import { createUser, findUserByUsername } from "../repositories/user-repository.js";
 
-const repository: UserRepository = new UserRepository();
 //TODO: move this to env config
 const saltRounds: number = 10;
 
@@ -12,7 +10,7 @@ export async function signup({
     password
 }: { username: string, password: string }): Promise<UserCreationResult>{
 
-    if (repository.findUserByUsername(username)){
+    if (await findUserByUsername(username)){
         return {
             status: StatusEnum.ERROR,
             username,
@@ -21,8 +19,10 @@ export async function signup({
     }
 
     const hashedPassword: string = await bcrypt.hash(password, saltRounds);
-    const user: UserEntity = new UserEntity(username, hashedPassword);
-    if (!repository.createUser(user)){
+    if (!createUser({
+        username,
+        password: hashedPassword
+    })){
         return {
             status: StatusEnum.ERROR,
             username,
