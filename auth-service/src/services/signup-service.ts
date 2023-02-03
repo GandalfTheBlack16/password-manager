@@ -1,37 +1,35 @@
-import bcrypt from 'bcrypt';
-import UserCreationResult, { StatusEnum } from "../models/messages/user-creation-result.js";
+import { AuthStatusEnum } from '../models/responses/auth-status-enum.js';
+import UserCreationResponse from "../models/responses/user-creation-response.js";
 import { createUser, findUserByUsername } from "../repositories/user-repository.js";
-
-//TODO: move this to env config
-const saltRounds: number = 10;
+import { hashPassowrd } from '../util/auth-util.js';
 
 export async function signup({
     username,
     password
-}: { username: string, password: string }): Promise<UserCreationResult>{
+}: { username: string, password: string }): Promise<UserCreationResponse>{
 
     if (await findUserByUsername(username)){
         return {
-            status: StatusEnum.ERROR,
+            status: AuthStatusEnum.ERROR,
             username,
             message: 'User already exists.'
         }
     }
 
-    const hashedPassword: string = await bcrypt.hash(password, saltRounds);
+    const hashedPassword: string = await hashPassowrd(password);
     if (!createUser({
         username,
         password: hashedPassword
     })){
         return {
-            status: StatusEnum.ERROR,
+            status: AuthStatusEnum.ERROR,
             username,
             message: 'Unexpected error.'
         }
     }
 
     return {
-        status: StatusEnum.SUCCESS,
+        status: AuthStatusEnum.SUCCESS,
         username,
         message: 'User created successfully'
     }

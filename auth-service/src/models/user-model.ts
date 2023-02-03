@@ -1,9 +1,13 @@
 import { model, Schema } from 'mongoose';
-import IUserEntity from './user-entity.js';
 
-const userSchema = new Schema<IUserEntity>({
+export interface IUser {
+    username: string;
+    password: string;
+}
+
+const schema = new Schema<IUser>({
     username: { type: String, required: true },
     password: { type: String, required: true }
 });
 
-export const User = model<IUserEntity>('User', userSchema);
+export const UserModel = model<IUser>('User', schema);

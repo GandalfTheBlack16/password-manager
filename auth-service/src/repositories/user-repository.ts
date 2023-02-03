@@ -1,18 +1,17 @@
-import UserEntity from "../models/user-entity.js";
-import { User } from "../models/user-model.js";
+import { IUser, UserModel } from "../models/user-model.js";
 
-export async function createUser(user: UserEntity): Promise<boolean>{
+export async function createUser(user: IUser): Promise<boolean>{
     if (await getUserByUsername(user.username)){
         return false;
     }
-    await new User(user).save();
+    await new UserModel(user).save();
     return true;
 }
 
-export async function findUserByUsername(username: string): Promise<UserEntity | null> {
+export async function findUserByUsername(username: string): Promise<IUser | null> {
     return await getUserByUsername(username);
 }
 
-async function getUserByUsername(username: string): Promise<UserEntity | null>{
-    return await User.findOne({ username });
+async function getUserByUsername(username: string): Promise<IUser | null>{
+    return await UserModel.findOne({ username });
 }
