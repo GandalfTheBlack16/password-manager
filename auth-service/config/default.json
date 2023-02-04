@@ -1,0 +1,10 @@
+{
+    "appConfig": {
+        "port": 3000,
+        "jwt_secret": "dcfb2fa094192240cfc50a9206296a44",
+        "salt_rounds": 10
+    },
+    "dbConfig" : {
+        "uri": "mongodb://127.0.0.1:27017/users"
+    }
+}

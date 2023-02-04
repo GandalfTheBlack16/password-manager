@@ -1,12 +1,15 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import config from 'config'
+
 
 export async function hashPassowrd(password: string): Promise<string>{
-    return await bcrypt.hash(password, 10);
+    const saltRounds = process.env.SALT_ROUNDS ?? config.get('appConfig.salt_rounds') as number;
+    return await bcrypt.hash(password, saltRounds);
 }
 
 export async function compareHash(hashed: string, password: string): Promise<boolean> {
-    return bcrypt.compare(password, hashed);
+    return await bcrypt.compare(password, hashed);
 }
 
 export async function signJwt(

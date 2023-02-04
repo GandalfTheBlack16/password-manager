@@ -2,6 +2,7 @@ import { AuthStatusEnum } from "../models/responses/auth-status-enum.js";
 import UserAuthenticatedResponse from "../models/responses/user-authenticated-response.js";
 import { findUserByUsername } from "../repositories/user-repository.js";
 import { compareHash, signJwt } from "../util/auth-util.js";
+import config from 'config';
 
 
 export async function login({
@@ -21,8 +22,9 @@ export async function login({
     if (!await compareHash(user.password, password)){
         return authError;
     }
-
-    const access_token = await signJwt(user.username, user.password, '_secret');
+    
+    const secret = process.env.JWT_SECRET ?? config.get('appConfig.jwt_secret') as string;
+    const access_token = await signJwt(user.username, user.password, secret);
     
     return {
         status: AuthStatusEnum.SUCCESS,

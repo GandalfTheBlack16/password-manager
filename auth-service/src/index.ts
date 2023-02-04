@@ -7,9 +7,10 @@ import mongoose from 'mongoose';
 import UserAuthenticatedResponse from './models/responses/user-authenticated-response.js';
 import { login } from './services/login-service.js';
 import { AuthStatusEnum } from './models/responses/auth-status-enum.js';
+import config from 'config';
 
-const MONGO_URI = process.env.MONGODB ?? 'mongodb://127.0.0.1:27017/test';
-const PORT = process.env.PORT ?? 3000;
+const MONGO_URI = process.env.MONGODB ?? config.get('dbConfig.uri');
+const PORT = process.env.PORT ?? config.get('appConfig.port') as number;
 
 const app: Express = express();
 app.use(json());
@@ -25,6 +26,12 @@ app.post(
           return res.status(400).json({ errors: errors.array() });
         }
         const result: UserCreationResponse = await signup({username, password});
+        if (result.status === AuthStatusEnum.ERROR){
+          if (result.message.includes('already exists'))
+            res.status(409);
+          else
+            res.status(500)
+        }
         res.json({ result });
 });
 
@@ -40,7 +47,7 @@ app.post(
     }
     const result: UserAuthenticatedResponse = await login({ username, password });
     if (result.status === AuthStatusEnum.ERROR){
-      return res.status(401).json({ result });
+      res.status(401);
     }
     res.json({ result });
 });
