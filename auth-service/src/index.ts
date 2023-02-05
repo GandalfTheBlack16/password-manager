@@ -1,5 +1,6 @@
 import express, { Express, json, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import cors from 'cors';
 import { logger } from '@password-manager/commons';
 import { signup } from './services/signup-service.js';
 import UserCreationResponse from './models/responses/user-creation-response.js';
@@ -13,6 +14,7 @@ const MONGO_URI = process.env.MONGODB ?? config.get('dbConfig.uri');
 const PORT = process.env.PORT ?? config.get('appConfig.port') as number;
 
 const app: Express = express();
+app.use(cors());
 app.use(json());
 
 app.post(

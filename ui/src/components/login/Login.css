@@ -1,0 +1,36 @@
+.login_form {
+    padding: 2rem;
+    border: 1.5px solid #497db5;
+    border-radius: 15px;
+    background-color: #0000003c;
+    display: flex;
+    flex-direction: column;
+    min-width: 320px
+}
+
+.login_form__input, 
+.login_form__submit {
+    padding: .6rem;
+}
+
+.login_form__input input {
+    padding: .5rem;
+    min-width: 80%;
+}
+
+.login_form__submit input {
+    background-color: #497db5;
+    border-color: transparent;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+.login_switch {
+    margin-top: 2rem;
+    font-size: small;
+}
+
+.login_switch a {
+    cursor: pointer;
+}
