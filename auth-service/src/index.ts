@@ -48,7 +48,7 @@ app.post(
           else
             res.status(500)
         }
-        res.json({ result });
+        res.status(201).json({ result });
 });
 
 app.post(

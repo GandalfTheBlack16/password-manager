@@ -4,8 +4,9 @@ import config from 'config'
 
 
 export async function hashPassowrd(password: string): Promise<string>{
-    const saltRounds = process.env.SALT_ROUNDS ?? config.get('appConfig.salt_rounds') as number;
-    return await bcrypt.hash(password, saltRounds);
+    const saltRounds: string = process.env.SALT_ROUNDS ?? config.get('appConfig.salt_rounds');
+    const salt = await bcrypt.genSalt(+saltRounds);
+    return await bcrypt.hash(password, salt);
 }
 
 export async function compareHash(hashed: string, password: string): Promise<boolean> {
