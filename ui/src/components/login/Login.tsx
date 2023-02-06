@@ -31,7 +31,7 @@ function Login(){
     const submitLoginForm = async (event:any) => {
         event.preventDefault();
         if (username && password){
-            const url: string = process.env.LOGIN_SRV_URI ?? 'http://localhost:3000/login';
+            const url: string = import.meta.env.VITE_LOGIN_SRV_URI;
             try {
                 const respone = await fetch(url, { 
                     method: 'POST', 
@@ -50,7 +50,7 @@ function Login(){
         event.preventDefault();
         if (username && password && confirmPass){
             if (password === confirmPass){
-                const url: string = process.env.SIGNUP_SRV_URI ?? 'http://localhost:3000/signup';
+                const url: string = import.meta.env.VITE_SIGNUP_SRV_URI;
                 try {
                     const respone = await fetch(url, {
                         method: 'POST', 
@@ -67,6 +67,7 @@ function Login(){
     }
 
     const renderLoginForm = () => {
+        console.log(import.meta.env)
         return (
             <>
             <h2>Login into your account</h2>
