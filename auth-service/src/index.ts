@@ -17,6 +17,20 @@ const app: Express = express();
 app.use(cors());
 app.use(json());
 
+app.get(
+  '/health',
+  async (req: Request, res: Response) => {
+    const dbState: number = mongoose.connection.readyState;
+    switch(dbState){
+      case 1:
+        return res.status(200).json({ status: 'UP' })
+      case 2:
+        return res.status(503).json({ status: 'STARTING' });
+      default:
+        return res.status(503).json({ status: 'DOWN' });
+    }
+});
+
 app.post(
     '/signup',
     body('username').isEmail(),
