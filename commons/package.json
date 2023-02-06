@@ -1,7 +1,11 @@
 {
   "name": "@password-manager/commons",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Commons utilities and tools for @password-manager context",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,9 +16,12 @@
     "clean": "del-cli --force ./dist/*",
     "build": "npm run clean && tsc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "password", "manager", "commons", "microservices"
+  ],
+  "author": "GandalfTheBlack16",
   "license": "ISC",
+  "repository": "https://github.com/GandalfTheBlack16/password-manager/tree/master/commons",
   "dependencies": {
     "winston": "^3.8.2"
   },
