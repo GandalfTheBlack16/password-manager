@@ -31,7 +31,7 @@ function Login(){
     const submitLoginForm = async (event:any) => {
         event.preventDefault();
         if (username && password){
-            const url: string = 'http://localhost:3000/login'
+            const url: string = process.env.LOGIN_SRV_URI ?? 'http://localhost:3000/login';
             try {
                 const respone = await fetch(url, { 
                     method: 'POST', 
@@ -50,7 +50,7 @@ function Login(){
         event.preventDefault();
         if (username && password && confirmPass){
             if (password === confirmPass){
-                const url: string = 'http://localhost:3000/signup'
+                const url: string = process.env.SIGNUP_SRV_URI ?? 'http://localhost:3000/signup';
                 try {
                     const respone = await fetch(url, {
                         method: 'POST', 
