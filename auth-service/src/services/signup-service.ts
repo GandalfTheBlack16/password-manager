@@ -8,29 +8,38 @@ export async function signup({
     password
 }: { username: string, password: string }): Promise<UserCreationResponse>{
 
-    if (await findUserByUsername(username)){
+    try {
+        if (await findUserByUsername(username)){
+            return {
+                status: AuthStatusEnum.ERROR,
+                username,
+                message: 'User already exists.'
+            }
+        }
+    
+        const hashedPassword: string = await hashPassowrd(password);
+        if (!createUser({
+            username,
+            password: hashedPassword
+        })){
+            return {
+                status: AuthStatusEnum.ERROR,
+                username,
+                message: 'Unexpected error creating the user.'
+            }
+        }
+    
+        return {
+            status: AuthStatusEnum.SUCCESS,
+            username,
+            message: 'User created successfully'
+        }
+        
+    } catch (error) {
         return {
             status: AuthStatusEnum.ERROR,
             username,
-            message: 'User already exists.'
+            message: `Unexpected error: ${error}`
         }
-    }
-
-    const hashedPassword: string = await hashPassowrd(password);
-    if (!createUser({
-        username,
-        password: hashedPassword
-    })){
-        return {
-            status: AuthStatusEnum.ERROR,
-            username,
-            message: 'Unexpected error.'
-        }
-    }
-
-    return {
-        status: AuthStatusEnum.SUCCESS,
-        username,
-        message: 'User created successfully'
     }
 }
