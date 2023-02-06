@@ -67,7 +67,6 @@ function Login(){
     }
 
     const renderLoginForm = () => {
-        console.log(import.meta.env)
         return (
             <>
             <h2>Login into your account</h2>
