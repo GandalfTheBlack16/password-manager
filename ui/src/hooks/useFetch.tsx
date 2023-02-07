@@ -25,9 +25,9 @@ function useFetch({
                 }
             }
         )();
-    }, [ url, data, loading, error ]);
+    }, [ url ]);
 
-    return [ data, error, loading ];
+    return { data, error, loading }
 }
 
 export default useFetch;

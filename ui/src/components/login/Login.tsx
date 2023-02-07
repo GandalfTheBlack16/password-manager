@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useValidatedInput from "../../hooks/useInputValidated";
-import { login } from "../../services/LoginService";
-import { signUp } from "../../services/SignupService";
+import { login, signUp, usernameAvailable } from "../../services/AuthService";
 import { validateEmail, validatePassword } from "../../util/validation-utils";
 import './Login.css';
 
@@ -42,6 +41,13 @@ function Login(){
         setIsLogin(current => !current);
         resetPassword();
         resetConfirmPassword();
+    }
+
+    const handleUsernameBlur = () => {
+        onUsernameBlurred();
+        if (!hasErrorUsername){
+            const { data, error, loading } = usernameAvailable(username);
+        }
     }
 
     const submitLoginForm = async (event:any) => {
@@ -120,7 +126,7 @@ function Login(){
                         className={ hasErrorUsername ? 'invalid_input': '' }
                         value={ username }
                         onChange={ onUsernameChanged }
-                        onBlur={ onUsernameBlurred }
+                        onBlur={ handleUsernameBlur }
                     />
                     { hasErrorUsername && 
                         <div className="validation_error">

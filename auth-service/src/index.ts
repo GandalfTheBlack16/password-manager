@@ -1,14 +1,13 @@
 import express, { Express, json, Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body, validationResult, query } from 'express-validator';
 import cors from 'cors';
 import { logger } from '@password-manager/commons';
-import { signup } from './services/signup-service.js';
 import UserCreationResponse from './models/responses/user-creation-response.js';
 import mongoose from 'mongoose';
 import UserAuthenticatedResponse from './models/responses/user-authenticated-response.js';
-import { login } from './services/login-service.js';
 import { AuthStatusEnum } from './models/responses/auth-status-enum.js';
 import config from 'config';
+import { signup, login, usernameExists } from './services/auth-service.js';
 
 const MONGO_URI = process.env.MONGODB ?? config.get('dbConfig.uri');
 const PORT = process.env.PORT ?? config.get('appConfig.port') as number;
@@ -66,6 +65,22 @@ app.post(
       res.status(401);
     }
     res.json({ result });
+});
+
+app.get(
+  '/available',
+  query('username').isEmail(),
+  async (req: Request, res: Response) => {
+    const { username } = req.query;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const available = !await usernameExists(username as string);
+    res.json({
+      username,
+      available
+    })
 });
 
 app.listen(PORT as number, async () => {
