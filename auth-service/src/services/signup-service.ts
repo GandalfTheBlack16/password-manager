@@ -18,7 +18,7 @@ export async function signup({
         }
     
         const hashedPassword: string = await hashPassowrd(password);
-        if (!createUser({
+        if (!await createUser({
             username,
             password: hashedPassword
         })){
