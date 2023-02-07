@@ -1,68 +1,60 @@
 import { useState } from "react";
-import useFetch from "../../hooks/useFetch";
+import useValidatedInput from "../../hooks/useInputValidated";
+import { login } from "../../services/LoginService";
+import { signUp } from "../../services/SignupService";
+import { validateEmail, validatePassword } from "../../util/validation-utils";
 import './Login.css';
 
 function Login(){
 
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ confirmPass, setConfirmPass ] = useState('');
+    const {
+        value: username,
+        isValid: isValidUsername,
+        hasError: hasErrorUsername,
+        changeHandler: onUsernameChanged,
+        blurHandler: onUsernameBlurred
+    } = useValidatedInput(validateEmail)
+
+    const {
+        value: password,
+        isValid: isValidPassword,
+        hasError: hasErrorPassword,
+        changeHandler: onPasswordChanged,
+        blurHandler: onPasswordBlurred,
+        reset: resetPassword
+    } = useValidatedInput(validatePassword)
+
+    const {
+        value: confirmPassword,
+        isValid: isValidConfirmPassword,
+        hasError: hasErrorConfirmPassword,
+        changeHandler: onConfirmPasswordChanged,
+        blurHandler: onConfirmPasswordBlurred,
+        reset: resetConfirmPassword
+    } = useValidatedInput((input: string) => {
+        return validatePassword(password) && input === password
+    })
+
     const [ isLogin, setIsLogin ] = useState(true);
-
-    const onUsernameChanged = (event: any) => {
-        setUsername(event.target.value);
-    }
-    
-    const onPasswordChanged = (event: any) => {
-        setPassword(event.target.value);
-    }
-
-    const onConfirmPasswordChanged = (event: any) => {
-        setConfirmPass(event.target.value);
-    }
 
     const onFormSwitched = (event: any) => {
         event.preventDefault();
         setIsLogin(current => !current);
-        setPassword('');
-        setConfirmPass('');
+        resetPassword();
+        resetConfirmPassword();
     }
 
     const submitLoginForm = async (event:any) => {
         event.preventDefault();
-        if (username && password){
-            const url: string = import.meta.env.VITE_LOGIN_SRV_URI;
-            try {
-                const respone = await fetch(url, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const data = await respone.json();
-                console.log('Logged in', { data });
-            } catch(err) {
-                console.log('Login error', { err });
-            }
+        if (isValidUsername && isValidPassword){
+            login({ username, password });
         }
     }
 
     const submitSignupForm = async (event:any) => {
         event.preventDefault();
-        if (username && password && confirmPass){
-            if (password === confirmPass){
-                const url: string = import.meta.env.VITE_SIGNUP_SRV_URI;
-                try {
-                    const respone = await fetch(url, {
-                        method: 'POST', 
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-                    const data = await respone.json();
-                    console.log('Logged in', { data });
-                } catch(err) {
-                    console.log('Login error', { err });
-                }
-            }
+        if (isValidUsername && isValidPassword && isValidConfirmPassword){
+            signUp({ username, password });
         }
     }
 
@@ -75,24 +67,39 @@ function Login(){
                     <input 
                         id='username_input'
                         type='text'
-                        placeholder="Username"
+                        placeholder="Email"
+                        className={ hasErrorUsername ? 'invalid_input': '' }
                         value={ username }
                         onChange={ onUsernameChanged }
+                        onBlur={ onUsernameBlurred }
                     />
+                    { hasErrorUsername && 
+                        <div className="validation_error">
+                            Please, enter a valid email 
+                        </div>
+                    }
                 </div>
                 <div className="login_form__input">
                     <input 
                         id='password_input'
                         type='password'
                         placeholder="Password"
+                        className={ hasErrorPassword ? 'invalid_input': '' }
                         value={ password }
                         onChange={ onPasswordChanged }
+                        onBlur={ onPasswordBlurred }
                     />
+                    { hasErrorPassword && 
+                        <div className="validation_error">
+                            Invalid password. Password should be 6-32 characters length 
+                        </div>
+                    }
                 </div>
                 <div className="login_form__submit">
                     <input 
                         type='submit'
                         value='Login'
+                        disabled={!isValidUsername || !isValidPassword }
                     />
                 </div>
             </form>
@@ -109,33 +116,55 @@ function Login(){
                     <input 
                         id='username_input'
                         type='text'
-                        placeholder="Username"
+                        placeholder="Email"
+                        className={ hasErrorUsername ? 'invalid_input': '' }
                         value={ username }
                         onChange={ onUsernameChanged }
+                        onBlur={ onUsernameBlurred }
                     />
+                    { hasErrorUsername && 
+                        <div className="validation_error">
+                            Please, enter a valid email 
+                        </div>
+                    }
                 </div>
                 <div className="login_form__input">
                     <input 
                         id='password_input'
                         type='password'
                         placeholder="Password"
+                        className={ hasErrorPassword ? 'invalid_input': '' }
                         value={ password }
                         onChange={ onPasswordChanged }
+                        onBlur={ onPasswordBlurred }
                     />
+                    { hasErrorPassword && 
+                        <div className="validation_error">
+                            Invalid password. Password should be 6-32 characters length 
+                        </div>
+                    }
                 </div>
                 <div className="login_form__input">
                     <input 
                         id='confirmPass_input'
                         type='password'
                         placeholder="Confirm password"
-                        value={ confirmPass }
+                        className={ hasErrorConfirmPassword ? 'invalid_input': '' }
+                        value={ confirmPassword }
                         onChange={ onConfirmPasswordChanged }
+                        onBlur={ onConfirmPasswordBlurred }
                     />
+                    { hasErrorConfirmPassword && 
+                        <div className="validation_error">
+                            { password !== confirmPassword ? 'Passwords don\'t match': 'Invalid password. Password should be 6-32 characters length' }
+                        </div>
+                    }
                 </div>
                 <div className="login_form__submit">
                     <input 
                         type='submit'
-                        value='Login'
+                        value='Sign up'
+                        disabled={!isValidUsername || !isValidPassword || !isValidConfirmPassword}
                     />
                 </div>
             </form>

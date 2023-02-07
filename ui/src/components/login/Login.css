@@ -5,7 +5,8 @@
     background-color: #0000003c;
     display: flex;
     flex-direction: column;
-    min-width: 320px
+    min-width: 460px;
+    min-height: 400px;
 }
 
 .login_form__input, 
@@ -14,8 +15,10 @@
 }
 
 .login_form__input input {
-    padding: .5rem;
+    padding: 0.5rem 0.5rem;
     min-width: 80%;
+    border: 1px solid #ffffff73;
+    border-radius: 10px;
 }
 
 .login_form__submit input {
@@ -26,6 +29,10 @@
     cursor: pointer;
 }
 
+.login_form__submit input:disabled {
+    cursor: not-allowed;
+}
+
 .login_switch {
     margin-top: 2rem;
     font-size: small;
@@ -33,4 +40,15 @@
 
 .login_switch a {
     cursor: pointer;
+}
+
+.invalid_input {
+    border-color: #f33333 !important;
+}
+
+.login_form__input .validation_error {
+    color: #f33333;
+    font-size: small;
+    text-align: left;
+    padding: .6rem 2rem;
 }
