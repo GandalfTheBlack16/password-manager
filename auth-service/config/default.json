@@ -5,6 +5,6 @@
         "salt_rounds": 10
     },
     "dbConfig" : {
-        "uri": "mongodb+srv://staging_user:GRqvwqDIJT7e2ShQ@stagingenv.0lgycii.mongodb.net/?retryWrites=true&w=majority"
+        "uri": "mongodb://localhost:27017/test"
     }
 }
