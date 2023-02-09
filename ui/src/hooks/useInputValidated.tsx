@@ -14,7 +14,10 @@ function useValidatedInput(
     }
 
     const blurHandler = () => {
-        setIsTouched(true);
+        return new Promise(resolve => {
+            setIsTouched(true);
+            resolve('');
+        })
     }
 
     const reset = () => {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import useValidatedInput from "../../hooks/useInputValidated";
-import { login, signUp, usernameAvailable } from "../../services/AuthService";
+import { login, signUp, fetchUsernameAvailable } from "../../services/AuthService";
 import { validateEmail, validatePassword } from "../../util/validation-utils";
+import TooltipIcon from "../ui/tooltip-icon/TooltipIcon";
 import './Login.css';
 
 function Login(){
@@ -11,7 +12,8 @@ function Login(){
         isValid: isValidUsername,
         hasError: hasErrorUsername,
         changeHandler: onUsernameChanged,
-        blurHandler: onUsernameBlurred
+        blurHandler: onUsernameBlurred,
+        reset: resetUsername
     } = useValidatedInput(validateEmail)
 
     const {
@@ -35,18 +37,28 @@ function Login(){
     })
 
     const [ isLogin, setIsLogin ] = useState(true);
+    const [ usernameIsLoading, setUsernameIsLoading ] = useState(false);
+    const [ usernameIsAvailable, setUsernameIsAvailable ] = useState({ ready: false, available: false });
 
     const onFormSwitched = (event: any) => {
         event.preventDefault();
         setIsLogin(current => !current);
+        resetUsername();
         resetPassword();
         resetConfirmPassword();
     }
 
-    const handleUsernameBlur = () => {
-        onUsernameBlurred();
-        if (!hasErrorUsername){
-            const { data, error, loading } = usernameAvailable(username);
+    const handleUsernameBlur = async (event: any) => {
+        await onUsernameBlurred();
+        if (validateEmail(event.target.value)){
+            setUsernameIsLoading(true);
+            const response = await fetchUsernameAvailable(username);
+            const data = await response.json();
+            setUsernameIsLoading(false);
+            setUsernameIsAvailable({ ready: true, available: data.available });
+        }
+        else {
+            setUsernameIsAvailable({ ready: false, available: false });
         }
     }
 
@@ -79,12 +91,12 @@ function Login(){
                         onChange={ onUsernameChanged }
                         onBlur={ onUsernameBlurred }
                     />
-                    { hasErrorUsername && 
-                        <div className="validation_error">
-                            Please, enter a valid email 
-                        </div>
-                    }
                 </div>
+                { hasErrorUsername && 
+                    <div className="validation_error">
+                        Please, enter a valid email 
+                    </div>
+                }
                 <div className="login_form__input">
                     <input 
                         id='password_input'
@@ -95,12 +107,12 @@ function Login(){
                         onChange={ onPasswordChanged }
                         onBlur={ onPasswordBlurred }
                     />
-                    { hasErrorPassword && 
-                        <div className="validation_error">
-                            Invalid password. Password should be 6-32 characters length 
-                        </div>
-                    }
                 </div>
+                { hasErrorPassword && 
+                    <div className="validation_error">
+                        Invalid password. Password should be 6-32 characters length 
+                    </div>
+                }
                 <div className="login_form__submit">
                     <input 
                         type='submit'
@@ -111,6 +123,22 @@ function Login(){
             </form>
             </>
         );
+    }
+
+    const renderExtraDiv = () => {
+        return (
+            <div className="extra">
+            { usernameIsAvailable.ready && 
+                <TooltipIcon
+                    message={ usernameIsAvailable.available ? "Username is available": "Username is already taken" }
+                    isValid={usernameIsAvailable.available}
+                />
+            }
+            { usernameIsLoading &&
+                <div className="loader"></div>
+            }
+        </div>
+        )
     }
 
     const renderSignupForm = () => {
@@ -128,12 +156,13 @@ function Login(){
                         onChange={ onUsernameChanged }
                         onBlur={ handleUsernameBlur }
                     />
-                    { hasErrorUsername && 
-                        <div className="validation_error">
-                            Please, enter a valid email 
-                        </div>
-                    }
+                    { (usernameIsAvailable.ready || usernameIsLoading) && renderExtraDiv() }
                 </div>
+                { hasErrorUsername && 
+                    <div className="validation_error">
+                        Please, enter a valid email 
+                    </div>
+                }
                 <div className="login_form__input">
                     <input 
                         id='password_input'
@@ -144,12 +173,12 @@ function Login(){
                         onChange={ onPasswordChanged }
                         onBlur={ onPasswordBlurred }
                     />
-                    { hasErrorPassword && 
-                        <div className="validation_error">
-                            Invalid password. Password should be 6-32 characters length 
-                        </div>
-                    }
                 </div>
+                { hasErrorPassword && 
+                    <div className="validation_error">
+                        Invalid password. Password should be 6-32 characters length 
+                    </div>
+                }
                 <div className="login_form__input">
                     <input 
                         id='confirmPass_input'
@@ -160,12 +189,12 @@ function Login(){
                         onChange={ onConfirmPasswordChanged }
                         onBlur={ onConfirmPasswordBlurred }
                     />
-                    { hasErrorConfirmPassword && 
-                        <div className="validation_error">
-                            { password !== confirmPassword ? 'Passwords don\'t match': 'Invalid password. Password should be 6-32 characters length' }
-                        </div>
-                    }
                 </div>
+                { hasErrorConfirmPassword && 
+                    <div className="validation_error">
+                        { password !== confirmPassword ? 'Passwords don\'t match': 'Invalid password. Password should be 6-32 characters length' }
+                    </div>
+                }
                 <div className="login_form__submit">
                     <input 
                         type='submit'

@@ -36,7 +36,7 @@ export async function signUp({
     }
 }
 
-export function usernameAvailable(username: string) {
+export function fetchUsernameAvailable(username: string): Promise<Response> {
     const url: string = `${API_ENDPOINT}/available?username=${username}`;
-    return useFetch({ url });
+    return fetch(url);
 }

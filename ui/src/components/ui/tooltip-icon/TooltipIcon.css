@@ -1,0 +1,37 @@
+.tooltip-icon__container .icon {
+    width: 20px;
+    height: 20px;
+}
+
+.tooltip-icon__container .icon.valid {
+    /* color: #41b741; */
+    filter: invert(68%) sepia(11%) saturate(4007%) hue-rotate(69deg) brightness(91%) contrast(68%);
+}
+
+.tooltip-icon__container .icon.invalid {
+    /* color: #cf3232; */
+    filter: invert(41%) sepia(47%) saturate(2427%) hue-rotate(334deg) brightness(80%) contrast(105%);
+}
+
+.tooltip-icon__container .popup-message {
+    display: none;
+    position: absolute;
+    font-size: small;
+    padding: 5px;
+    border-radius: 25px;
+    margin-left: 7px;
+}
+
+.tooltip-icon__container .popup-message.valid {
+    color: #41b741;
+    background-color: #5dbd5d56;
+} 
+
+.tooltip-icon__container .popup-message.invalid {
+    color: #b12222;
+    background-color: #bf313138;
+} 
+
+.tooltip-icon__container .icon:hover~.popup-message {
+    display: inline;
+}
