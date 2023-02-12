@@ -1,6 +1,6 @@
 {
   "name": "@password-manager/commons",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Commons utilities and tools for @password-manager context",
   "publishConfig": {
     "access": "public",
