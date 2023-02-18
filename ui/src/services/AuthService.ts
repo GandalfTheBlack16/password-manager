@@ -12,8 +12,8 @@ export async function login({
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
-        const data = await respone.json();
-        console.log('Logged in', { data });
+        const { result } = await respone.json();
+        return result;
     } catch(err) {
         console.log('Login error', { err });
     }

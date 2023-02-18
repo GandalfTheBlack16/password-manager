@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/authContext";
 import useValidatedInput from "../../hooks/useInputValidated";
 import { login, signUp, fetchUsernameAvailable } from "../../services/AuthService";
 import { validateEmail, validatePassword } from "../../util/validation-utils";
@@ -40,6 +41,8 @@ function Login(){
     const [ usernameIsLoading, setUsernameIsLoading ] = useState(false);
     const [ usernameIsAvailable, setUsernameIsAvailable ] = useState({ ready: false, available: false });
 
+    const { setUserAuthenticated, setAccessToken } = useContext(AuthContext); 
+
     const onFormSwitched = (event: any) => {
         event.preventDefault();
         setIsLogin(current => !current);
@@ -65,7 +68,11 @@ function Login(){
     const submitLoginForm = async (event:any) => {
         event.preventDefault();
         if (isValidUsername && isValidPassword){
-            login({ username, password });
+            const { status, username: _username, access_token } = await login({ username, password });
+            if (status === 'success'){
+                setUserAuthenticated(_username);
+                setAccessToken(access_token);
+            }
         }
     }
 
