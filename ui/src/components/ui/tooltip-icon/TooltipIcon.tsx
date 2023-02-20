@@ -2,9 +2,8 @@ import './TooltipIcon.css';
 import ValidIcon from '../../../assets/valid-icon.svg';
 import InvalidIcon from '../../../assets/invalid-icon.svg';
 
-function TooltipIcon (props: any) {
+function TooltipIcon ({ message, isValid }: { message: string, isValid: boolean }) {
 
-    const { message, isValid } = props;
 
     const iconClass = `icon ${isValid ? 'valid': 'invalid'}`;
     const textClass = `popup-message ${isValid ? 'valid': 'invalid'}`;
