@@ -5,6 +5,7 @@
     background-color: #0000003c;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     min-width: 460px;
     min-height: 400px;
 }
@@ -42,7 +43,6 @@
 }
 
 .login_switch {
-    margin-top: 2rem;
     font-size: small;
 }
 
@@ -74,3 +74,18 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+.errors {
+    border: 1px solid #981515;
+    border-radius: 15px;
+    background-color: #f333330c;
+    padding: 1rem;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: small;
+    font-weight: 700;
+}

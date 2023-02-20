@@ -1,5 +1,3 @@
-import useFetch from "../hooks/useFetch";
-
 const API_ENDPOINT: string = import.meta.env.VITE_AUTH_SRV_URI;
 
 export async function login({
@@ -15,7 +13,7 @@ export async function login({
         const { result } = await respone.json();
         return result;
     } catch(err) {
-        console.log('Login error', { err });
+        throw err;
     }
 }
 
