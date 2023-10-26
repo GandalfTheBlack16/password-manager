@@ -1,5 +1,5 @@
 import { FormEvent } from "react"
-import { FiLock, FiUser } from "react-icons/fi"
+import { FiUser, FiKey } from "react-icons/fi"
 import './Login.css'
 
 export function Login () {
@@ -9,26 +9,29 @@ export function Login () {
     }
     
     return (
-        <main>
-            <form aria-label="User login" onSubmit={handleSubmit}>
-                <label>
-                    <FiUser className='form_icon' />
-                    <input 
-                        type="text"
-                        name="username"
-                        placeholder="Username/email"
-                    />
-                </label>
-                <label>
-                    <FiLock className='form_icon' />
-                    <input 
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                    />
-                </label>
-                <button>Login</button>
-            </form>
-        </main>
+        <form aria-label="User login" onSubmit={handleSubmit}>
+            <h2>Login with your account</h2>
+            <label>
+                <FiUser  
+                    size="25px"
+                />
+                <input 
+                    type="text"
+                    name="username"
+                    placeholder="Username/email"
+                />
+            </label>
+            <label>
+                <FiKey
+                    size="25px"
+                />
+                <input 
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                />
+            </label>
+            <button>Login</button>
+        </form>   
     )
 }
