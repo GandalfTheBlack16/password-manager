@@ -1,0 +1,25 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 2rem;
+    background-color: #232d3f63;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    transition: all 0.4s;
+}
+
+footer:hover {
+    cursor: pointer;
+    padding-right: 50px;
+    background-color: #0d5c707e;
+    border: transparent;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}

@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import { Header } from './components/header/Header';
+import { Footer } from "./components/footer/Footer.tsx";
 import { Login } from './components/Login.tsx'
 import { useState } from "react"
 
@@ -28,9 +29,7 @@ function App() {
       <main>
         <RouterProvider router={router}/>
       </main>
-      <footer>
-        
-      </footer>
+      <Footer />
     </>
   )
 }
