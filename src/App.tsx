@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
+import { Header } from './components/header/Header';
 import { Login } from './components/Login.tsx'
 import { useState } from "react"
-import { FiUnlock, FiLogOut, FiUser } from 'react-icons/fi'
+
 import './App.css'
 
 const router = createBrowserRouter([
@@ -17,35 +18,20 @@ const router = createBrowserRouter([
 
 function App() {
 
-  const [ logged ] = useState<boolean>(false)
+  const [ logged ] = useState<boolean>(true)
 
   return (
-    <main>
-      <nav>
-        <header>
-          <h1>Password Manager</h1>
-          <span>&ldquo;Keep safe your passwords&rdquo;</span>
-        </header>
-        {
-          logged &&
-          <section className="main_menu">
-            <div>
-              <FiUnlock />
-              <span>Vaults</span>
-            </div>
-            <div className="selected">
-              <FiUser />
-              <span>My Account</span>
-            </div>
-            <div>
-              <FiLogOut /> 
-              <span>Logout</span>
-            </div>
-          </section>
-        }
-      </nav>
-      <RouterProvider router={router}/>
-    </main>
+    <>
+      <Header
+        isLogged={logged}
+      />
+      <main>
+        <RouterProvider router={router}/>
+      </main>
+      <footer>
+        
+      </footer>
+    </>
   )
 }
 
