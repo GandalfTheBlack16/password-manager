@@ -1,57 +1,27 @@
-import { FormEvent, SyntheticEvent, useState } from "react"
 import { FiUser, FiKey } from "react-icons/fi"
 import './Login.css'
-import { loginRequest } from "../../services/LoginService"
+import { useLogin } from "../../hooks/useLogin"
+import { loginStore } from "../../stores/loginStore"
+import { Navigate } from "react-router-dom"
 
 export function Login () {
     
-    const [username, setUsername] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [invalidUser, setInvalidUser] = useState<boolean>(false)
-    const [invalidPassword, setInvalidPassword] = useState<boolean>(false)
+    const isLogged = loginStore(state => state.isLogged)
 
-    const onUsernameChange = (event: SyntheticEvent<HTMLInputElement>) => {
-        setUsername(event.currentTarget.value)
-    }
-
-    const onPasswordChange = (event: SyntheticEvent<HTMLInputElement>) => {
-        setPassword(event.currentTarget.value)
-    }
-
-    const onUsernameBlur = () => {
-        if (username.length === 0) {
-            setInvalidUser(false)
-            return
-        }
-        const invlidEmail = username.includes('@') && !/^\S+@\S+\.\S+$/.test(username)
-        setInvalidUser(username.length < 4 || invlidEmail)
-    }
-
-    const onPasswordBlur = () => {
-        if (password.length === 0) {
-            setInvalidPassword(false)
-            return
-        }
-        setInvalidPassword(password.length < 6)
-    }
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        if (invalidUser || invalidPassword) {
-            return
-        }
-        loginRequest({ username, password })
-            .then((data) => {
-                console.log(data)
-                setUsername('')
-                setPassword('')
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+    const {
+        username,
+        password,
+        invalidUser,
+        invalidPassword,
+        onUsernameChange,
+        onUsernameBlur,
+        onPasswordChange,
+        onPasswordBlur,
+        handleSubmit
+    } = useLogin()
     
     return (
+        isLogged ? <Navigate to={"/"} /> :
         <form aria-label="User login" onSubmit={handleSubmit}>
             <div className="form_header">
                 <h2>Login with your account</h2>
