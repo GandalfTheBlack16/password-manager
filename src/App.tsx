@@ -1,14 +1,14 @@
 import { RouterProvider } from "react-router-dom"
 import { Header } from './components/header/Header';
 import { Footer } from "./components/footer/Footer.tsx";
-import { loginStore } from "./stores/loginStore.ts";
+import { useAuthStore } from "./hooks/useAuthStore.ts";
 import { router } from "./Router.tsx";
 
 import './App.css'
 
 function App() {
 
-  const { isLogged } = loginStore()
+  const { isLogged } = useAuthStore()
 
   return (
     <>

@@ -1,12 +1,12 @@
 import { FormEvent, SyntheticEvent, useState } from "react"
 import { loginRequest } from "../services/LoginService"
-import { loginStore } from "../stores/loginStore"
+import { useAuthStore } from "./useAuthStore"
 import { useNavigate } from "react-router"
 
 export function useLogin() {
 
     const navigate = useNavigate()
-    const { login } = loginStore()
+    const { login } = useAuthStore()
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')

@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-interface LoginState {
+interface AuthState {
     isLogged: boolean
     accessToken: string
     userId: string
@@ -10,7 +10,7 @@ interface LoginState {
     logout: () => void
 }
 
-export const loginStore = create<LoginState>()(
+export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
             isLogged: false,
