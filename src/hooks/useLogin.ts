@@ -33,7 +33,7 @@ export function useLogin() {
             return curr
         })
     }
-    
+
     const validUsername = () => {
         const invalidEmail = username.includes('@') && !/^\S+@\S+\.\S+$/.test(username)
         if (username.length < 4 || invalidEmail) {
@@ -51,7 +51,7 @@ export function useLogin() {
         return true
     }
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setInvalidCredentials(false)
         if (!validUsername() || !validPassword()) {
@@ -73,6 +73,25 @@ export function useLogin() {
             })
     }
 
+    const handleSignup = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const formData = new FormData(event.currentTarget)
+        const email = formData.get('email')
+        const confirmPwd = formData.get('confirmPassword')
+        if (!username || !email|| !password || !confirmPwd){
+            return
+        }
+        if (!/^\S+@\S+\.\S+$/.test(email.toString()) || !validUsername() || !validPassword() || password !== confirmPwd.toString()) {
+            return
+        }
+        console.log({
+            username,
+            email,
+            password,
+            confirmPwd
+        }) 
+    }
+
     return {
         username,
         password,
@@ -81,6 +100,7 @@ export function useLogin() {
         invalidCredentials,
         onUsernameChange,
         onPasswordChange,
-        handleSubmit
+        handleLogin,
+        handleSignup
     }
 }

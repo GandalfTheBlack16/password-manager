@@ -24,6 +24,10 @@ export const router = createBrowserRouter([
       element: <PublicPageLayout><Login /></PublicPageLayout>,
     },
     {
+      path: '/signup',
+      element: <PublicPageLayout><Login signUp={true} /></PublicPageLayout>
+    },
+    {
       path: '/logout',
       loader: logoutLoader
     }
