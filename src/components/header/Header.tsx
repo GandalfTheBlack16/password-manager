@@ -1,34 +1,45 @@
 import { FiUnlock, FiLogOut, FiUser } from 'react-icons/fi'
+import { Link, useLocation } from 'react-router-dom'
 import logo from "../../assets/logo-no-background.svg"
-import { HeaderProps } from "../../types"
 import './Header.css'
 
-export function Header ({ isLogged }: HeaderProps) {
+export function Header() {
+    const { pathname } = useLocation()
     return (
         <header>
-            <img 
-                src={logo} 
-                alt="Password manager logo" 
+            <Link
                 className="logo"
-            />
+                to={'/'}
+            >
+                <img
+                    src={logo}
+                    alt="Password manager logo"
+                />
+            </Link>
             <nav>
-            {
-                isLogged &&
                 <section className="main_menu">
-                <div>
-                    <FiUnlock />
-                    <span>Vaults</span>
-                </div>
-                <div className="selected">
-                    <FiUser />
-                    <span>My Account</span>
-                </div>
-                <div>
-                    <FiLogOut /> 
-                    <span>Logout</span>
-                </div>
+                    <Link
+                        className={pathname === '/vaults' ? 'selected menu_item' : 'menu_item'}
+                        to={'/vaults'}
+                    >
+                        <FiUnlock />
+                        <span>Vaults</span>
+                    </Link>
+                    <Link
+                        className={pathname === '/account' ? 'selected menu_item' : 'menu_item'}
+                        to={'/account'}
+                    >
+                        <FiUser />
+                        <span>My Account</span>
+                    </Link>
+                    <Link
+                        className='menu_item'
+                        to={'/logout'}
+                    >
+                        <FiLogOut />
+                        <span>Logout</span>
+                    </Link>
                 </section>
-            }
             </nav>
         </header>
     )
