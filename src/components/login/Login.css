@@ -15,13 +15,16 @@ form label {
 }
 
 ::placeholder {
-    color: #d6cfcf;
+    color: #a9a9a9;
+    font-weight: 300;
+    font-style: oblique;
 }
 
 form input {
     padding: .7rem 1rem;
     border-radius: 15px;
     font-size: medium;
+    font-weight: 500;
     width: 50%;
 }
 

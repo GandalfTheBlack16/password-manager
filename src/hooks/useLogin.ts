@@ -12,47 +12,64 @@ export function useLogin() {
     const [password, setPassword] = useState<string>('')
     const [invalidUser, setInvalidUser] = useState<boolean>(false)
     const [invalidPassword, setInvalidPassword] = useState<boolean>(false)
+    const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false)
 
     const onUsernameChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setUsername(event.currentTarget.value)
+        setInvalidUser(curr => {
+            if (curr && validUsername()) {
+                return false
+            }
+            return curr
+        })
     }
-
+    
     const onPasswordChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setPassword(event.currentTarget.value)
+        setInvalidPassword(curr => {
+            if (curr && validPassword()) {
+                return false
+            }
+            return curr
+        })
     }
-
-    const onUsernameBlur = () => {
-        if (username.length === 0) {
-            setInvalidUser(false)
-            return
+    
+    const validUsername = () => {
+        const invalidEmail = username.includes('@') && !/^\S+@\S+\.\S+$/.test(username)
+        if (username.length < 4 || invalidEmail) {
+            setInvalidUser(true)
+            return false 
         }
-        const invlidEmail = username.includes('@') && !/^\S+@\S+\.\S+$/.test(username)
-        setInvalidUser(username.length < 4 || invlidEmail)
+        return true
     }
-
-    const onPasswordBlur = () => {
-        if (password.length === 0) {
-            setInvalidPassword(false)
-            return
+    
+    const validPassword = () => {
+        if (password.length < 6) {
+            setInvalidPassword(true)
+            return false
         }
-        setInvalidPassword(password.length < 6)
+        return true
     }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (invalidUser || invalidPassword) {
+        setInvalidCredentials(false)
+        if (!validUsername() || !validPassword()) {
             return
         }
         loginRequest({ username, password })
             .then((data) => {
                 const { accessToken, userInfo } = data
                 login(accessToken, userInfo.id, userInfo.username)
-                setUsername('')
-                setPassword('')
                 navigate('/vaults')
             })
             .catch(err => {
-                console.log(err)
+                if (err === 'Unauthorized') {
+                    setInvalidCredentials(true)
+                }
+            })
+            .finally(() => {
+                setPassword('')
             })
     }
 
@@ -61,10 +78,9 @@ export function useLogin() {
         password,
         invalidUser,
         invalidPassword,
+        invalidCredentials,
         onUsernameChange,
-        onUsernameBlur,
         onPasswordChange,
-        onPasswordBlur,
         handleSubmit
     }
 }

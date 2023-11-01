@@ -9,10 +9,9 @@ export default function Login () {
         password,
         invalidUser,
         invalidPassword,
+        invalidCredentials,
         onUsernameChange,
-        onUsernameBlur,
         onPasswordChange,
-        onPasswordBlur,
         handleSubmit
     } = useLogin()
     
@@ -33,7 +32,6 @@ export default function Login () {
                     className={invalidUser ? 'invalid': ''}
                     value={username}
                     onChange={onUsernameChange}
-                    onBlur={onUsernameBlur}
                 />
             </label>
             <label>
@@ -47,12 +45,12 @@ export default function Login () {
                     className={invalidPassword ? 'invalid': ''}
                     value={password}
                     onChange={onPasswordChange}
-                    onBlur={onPasswordBlur}
                 />
             </label>
             <div className="validation_error">
                 { invalidUser && <span>Username should have at least 4 characters and email should be a valid address</span> }
                 { invalidPassword && <span>Password should have at least 6 characters</span> }
+                { invalidCredentials && <span>Username does not exists or password is incorrect</span> }
             </div>
             <button
                 disabled={invalidUser || invalidPassword}
