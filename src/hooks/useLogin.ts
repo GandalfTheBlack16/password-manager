@@ -1,9 +1,12 @@
 import { FormEvent, SyntheticEvent, useState } from "react"
 import { loginRequest } from "../services/LoginService"
 import { loginStore } from "../stores/loginStore"
-import { redirect } from "react-router-dom"
+import { useNavigate } from "react-router"
 
 export function useLogin() {
+
+    const navigate = useNavigate()
+    const { login } = loginStore()
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -43,10 +46,10 @@ export function useLogin() {
         loginRequest({ username, password })
             .then((data) => {
                 const { accessToken, userInfo } = data
-                loginStore.getState().login(accessToken, userInfo.id, userInfo.username)
+                login(accessToken, userInfo.id, userInfo.username)
                 setUsername('')
                 setPassword('')
-                redirect('/')
+                navigate('/vaults')
             })
             .catch(err => {
                 console.log(err)

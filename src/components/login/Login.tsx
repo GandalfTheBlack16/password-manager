@@ -1,12 +1,8 @@
 import { FiUser, FiKey } from "react-icons/fi"
 import './Login.css'
 import { useLogin } from "../../hooks/useLogin"
-import { loginStore } from "../../stores/loginStore"
-import { Navigate } from "react-router-dom"
 
-export function Login () {
-    
-    const isLogged = loginStore(state => state.isLogged)
+export default function Login () {
 
     const {
         username,
@@ -21,7 +17,6 @@ export function Login () {
     } = useLogin()
     
     return (
-        isLogged ? <Navigate to={"/"} /> :
         <form aria-label="User login" onSubmit={handleSubmit}>
             <div className="form_header">
                 <h2>Login with your account</h2>
