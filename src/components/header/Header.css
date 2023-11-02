@@ -1,9 +1,11 @@
 header {
   display: flex;
+  position: sticky;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
   padding: 1rem 2rem;
+  background-color: #232d3f82;
 }
   
 .logo {

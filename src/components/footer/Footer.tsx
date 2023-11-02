@@ -8,10 +8,10 @@ export function Footer () {
                 href="https://github.com/GandalfTheBlack16/"
                 target='_blank'
             >
+                Developed by: GandalfTheBlack
                 <FiGithub 
                     size='20px'
                 />
-                GandalfTheBlack
             </a>
         </footer>
     )

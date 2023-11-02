@@ -1,7 +1,8 @@
 import { FiUser, FiKey, FiMail } from "react-icons/fi"
-import './Login.css'
 import { useLogin } from "../../hooks/useLogin"
 import { Link } from "react-router-dom"
+import logo from '../../assets/logo-no-background.png'
+import './Login.css'
 
 type LoginProps = {
     signUp?: boolean
@@ -11,14 +12,21 @@ export default function Login({ signUp = false }: LoginProps) {
 
     const {
         username,
+        email,
         password,
+        confirmPassword,
         invalidUser,
+        invalidEmail,
         invalidPassword,
+        invalidConfirmPassword,
         invalidCredentials,
         onUsernameChange,
+        onEmailChange,
         onPasswordChange,
+        onConfirmPasswordChange,
         handleLogin,
-        handleSignup
+        handleSignup,
+        signupResult
     } = useLogin()
 
     return (
@@ -30,6 +38,7 @@ export default function Login({ signUp = false }: LoginProps) {
             }
         }}>
             <div className="form_header">
+                <img src={logo} width={'300px'}/>
                 <h2>{!signUp ? 'Login with your account' : 'Create a new account'}</h2>
                 <Link to={!signUp ? '/signup' : '/login'}>
                     {
@@ -61,7 +70,9 @@ export default function Login({ signUp = false }: LoginProps) {
                         type="text"
                         name="email"
                         placeholder="Email"
-                        className={invalidUser ? 'invalid' : ''}
+                        className={invalidEmail ? 'invalid' : ''}
+                        value={email}
+                        onChange={onEmailChange}
                     />
                 </label>
             }
@@ -88,14 +99,18 @@ export default function Login({ signUp = false }: LoginProps) {
                         type="password"
                         name="confirmPassword"
                         placeholder="Confirm Password"
-                        className={invalidPassword ? 'invalid' : ''}
+                        className={invalidConfirmPassword ? 'invalid' : ''}
+                        value={confirmPassword}
+                        onChange={onConfirmPasswordChange}
                     />
                 </label>
             }
             <div className="validation_error">
-                {invalidUser && <span>Username should have at least 4 characters and email should be a valid address</span>}
+                {invalidUser || invalidEmail && <span>Username should have at least 4 characters and email should be a valid address</span>}
                 {invalidPassword && <span>Password should have at least 6 characters</span>}
+                {invalidConfirmPassword && <span>Passwords don't match</span>}
                 {invalidCredentials && <span>Username does not exists or password is incorrect</span>}
+                <span className="success">{signupResult}</span>
             </div>
             <button
                 disabled={invalidUser || invalidPassword}

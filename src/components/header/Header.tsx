@@ -1,6 +1,6 @@
 import { FiUnlock, FiLogOut, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
-import logo from "../../assets/logo-no-background.svg"
+import logo from "../../assets/logo-no-background.png"
 import './Header.css'
 
 export function Header() {

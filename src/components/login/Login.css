@@ -46,3 +46,8 @@ button {
 .validation_error span {
     color: #990b0b;
 }
+
+.validation_error span.success {
+    color: white;
+    font-weight: 600;
+}
