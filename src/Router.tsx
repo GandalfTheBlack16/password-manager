@@ -5,6 +5,7 @@ import Login from "./components/login/Login";
 import { PublicPageLayout } from "./layouts/PublicPageLayout";
 import { Account } from "./components/account/Account";
 import { useAuthStore } from "./hooks/useAuthStore";
+import { CredentialForm } from "./components/vaults/credential/CredentialForm";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
     {
       path: '/vaults',
       element: <AuthPageLayout><Vaults /></AuthPageLayout>,
+    },
+    {
+      path: '/vaults/credentials',
+      element: <AuthPageLayout><CredentialForm /></AuthPageLayout>
     },
     {
       path: '/account',

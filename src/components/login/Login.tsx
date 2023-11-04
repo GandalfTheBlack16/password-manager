@@ -30,7 +30,7 @@ export default function Login({ signUp = false }: LoginProps) {
     } = useLogin()
 
     return (
-        <form aria-label="User login" onSubmit={(e) => {
+        <form className="login_form" aria-label="User login" onSubmit={(e) => {
             if (!signUp){
                 handleLogin(e)
             } else {

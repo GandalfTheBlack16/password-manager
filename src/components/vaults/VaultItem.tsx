@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { FiCopy, FiEye, FiEyeOff, FiEdit3 } from 'react-icons/fi' 
+import { useNavigate } from 'react-router'
 
 type Props = {
     id: string,
+    vaultId: string,
     name: string,
     description: string,
     secret: string
 }
 
-export function VaultItem ({ id, name, description, secret }: Props) {
+export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
 
     const [show, setShow] = useState<boolean>(false)
+
+    const navigate = useNavigate()
 
     const handleShowButtonClick = () => {
         setShow(curr => !curr)
@@ -18,6 +22,15 @@ export function VaultItem ({ id, name, description, secret }: Props) {
 
     const handleCopyButtonClick = () => {
         navigator.clipboard.writeText(secret)
+    }
+
+    const handleEditButtonClick = () => {
+        navigate(`credentials`, {
+            state: {
+                vaultId,
+                credential: { id, name, description, secret }
+            }
+        })
     }
 
     return (
@@ -30,6 +43,7 @@ export function VaultItem ({ id, name, description, secret }: Props) {
                 <button
                     id={'editCred_' + id}
                     className='vault-header_actions'
+                    onClick={handleEditButtonClick}
                 >
                     <FiEdit3 size={'15px'} /> Edit
                 </button>

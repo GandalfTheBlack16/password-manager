@@ -30,3 +30,15 @@ export const fetchVaults = async () => {
 }
 
 const checkTokenExpired = (statusCode: number, payload: { message: string }) => statusCode === 401 && payload.message === TOKEN_EXPIRED_MESSAGE
+
+export const generatePassword = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let password = '';
+
+    for (let i = 0; i < 16; i++) {
+        const ramdomChar = chars.charAt(Math.floor(Math.random() * chars.length));
+        password += ramdomChar;
+    }
+
+    return password;
+}

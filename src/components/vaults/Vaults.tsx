@@ -4,10 +4,13 @@ import { fetchVaults } from "../../services/VaultService"
 import { FiPlus, FiTrash } from 'react-icons/fi' 
 import { VaultItem } from "./VaultItem";
 import './Vaults.css'
+import { useNavigate } from "react-router";
 
 export function Vaults () {
 
     const [vaultLit, setVaultList] = useState<Vault[]>([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchVaults()
@@ -18,6 +21,14 @@ export function Vaults () {
             console.log(err)
         })
     }, [])
+
+    const handleAddCredential = (vaultId: string) => {
+        navigate(`credentials`, {
+            state: {
+                vaultId
+            }
+        })
+    }
 
     return (
         <ul className="vault-list">
@@ -30,7 +41,11 @@ export function Vaults () {
                             <span>Last modified: {new Date(vault.lastModified).toLocaleString('en-GB', { timeZone: 'CET' })}</span>
                         </div>
                         <div className="vault-header_actions">
-                            <button><FiPlus size={'20px'}/> Add credential</button>
+                            <button
+                                onClick={() => { handleAddCredential(vault.id) }}
+                            >
+                                <FiPlus size={'20px'}/> Add credential
+                            </button>
                             <button><FiTrash size={'20px'}/> Remove vault</button>
                         </div>
                        </section>
@@ -40,6 +55,7 @@ export function Vaults () {
                                 return <VaultItem
                                     key={credential.id}
                                     id={credential.id}
+                                    vaultId={vault.id}
                                     name={credential.name}
                                     description={credential.description}
                                     secret={credential.secret}
