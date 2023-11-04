@@ -21,7 +21,7 @@ export function VaultItem ({ id, name, description, secret }: Props) {
     }
 
     return (
-        <article className="item" key={id}>
+        <article className="item">
             <div className="item_header">
                 <div className="item_header-info">
                     <h3>{name}</h3>

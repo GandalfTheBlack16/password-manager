@@ -37,7 +37,8 @@ export function Vaults () {
                        <section className="vault-items">
                         {
                             vault.credentials.map(credential => {
-                                return <VaultItem 
+                                return <VaultItem
+                                    key={credential.id}
                                     id={credential.id}
                                     name={credential.name}
                                     description={credential.description}
