@@ -58,3 +58,49 @@ button:disabled:hover {
 a {
   color: white;
 }
+
+h2,h3 {
+  margin-block-end: .5rem;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip_text {
+  visibility: hidden;
+  width: max-content;
+  background-color: #2f70ad;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  /*to change direction*/
+  top: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: all ease 0.4s;
+}
+
+.tooltip .tooltip_text::after {
+  content: "";
+  position: absolute;
+  /*to change direction*/
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 7px;
+  border-style: solid;
+  /*to change direction*/
+  border-color: transparent transparent #2f70ad transparent;
+}
+
+.tooltip:hover .tooltip_text {
+  visibility: visible;
+  opacity: 1;
+}

@@ -25,3 +25,17 @@ export interface SignupServiceData {
     message: string
     status: string
 }
+
+export interface Vault {
+    credentials:  Credential[];
+    id:           string;
+    lastModified: Date;
+    owner:        string;
+   }
+   
+export interface Credential {
+    description: string;
+    id:          string;
+    name:        string;
+    secret:      string;
+}
