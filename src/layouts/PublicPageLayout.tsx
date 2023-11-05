@@ -1,5 +1,6 @@
 import { Navigate } from "react-router";
 import { useAuthStore } from "../hooks/useAuthStore";
+import logo from '../assets/logo-no-background.png'
 
 export function PublicPageLayout ({ children }: { children: JSX.Element }) {
     const { isLogged } = useAuthStore()
@@ -9,8 +10,11 @@ export function PublicPageLayout ({ children }: { children: JSX.Element }) {
     }
 
     return (
-        <main>
-            { children }
-        </main>
+        <>
+            <img src={logo} style={{margin: 'auto'}} width={'350px'}/>
+            <main>
+                { children }
+            </main>
+        </>
     )
 }

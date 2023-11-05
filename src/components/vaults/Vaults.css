@@ -43,7 +43,7 @@ ul.vault-list {
     }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 815px) {
     .vault-items {
         grid-template-columns: repeat(1, minmax(200px, 1fr));
     }
@@ -82,11 +82,19 @@ article.item {
     font-size: 14px;
 }
 
+.item_header-actions {
+    display: inline-flex;
+    gap: 5px;
+    align-items: baseline;
+}
+
 .item_header button {
+    display: inline-flex;
+    align-items: center;
     width: fit-content;
     height: fit-content;
     font-size: 14px;
-    padding: 10px 20px;
+    padding: 10px;
 }
 
 .item_action {
@@ -103,4 +111,8 @@ article.item {
 
 .item_action button {
     padding: .1rem;
+}
+
+.none_vaults h3 {
+    margin-block-end: 1.5rem;
 }

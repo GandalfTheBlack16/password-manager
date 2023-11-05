@@ -35,7 +35,7 @@ export interface Vault {
    
 export interface Credential {
     description: string;
-    id:          string;
+    id?:          string;
     name:        string;
     secret:      string;
 }

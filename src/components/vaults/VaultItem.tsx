@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { FiCopy, FiEye, FiEyeOff, FiEdit3 } from 'react-icons/fi' 
+import { FiCopy, FiEye, FiEyeOff, FiEdit3, FiDelete } from 'react-icons/fi' 
 import { useNavigate } from 'react-router'
+import { deleteCredential } from '../../services/VaultService'
 
 type Props = {
-    id: string,
+    id?: string,
     vaultId: string,
     name: string,
     description: string,
@@ -33,6 +34,20 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
         })
     }
 
+    const handleDeleteButtonClick = () => {
+        if (id) {
+            deleteCredential(vaultId, id)
+            .then(vault => {
+                navigate('/vaults', {
+                    state: { vault }
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
+
     return (
         <article className="item">
             <div className="item_header">
@@ -40,13 +55,28 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
                     <h3>{name}</h3>
                     <span>{description}</span>
                 </div>
-                <button
-                    id={'editCred_' + id}
-                    className='vault-header_actions'
-                    onClick={handleEditButtonClick}
-                >
-                    <FiEdit3 size={'15px'} /> Edit
-                </button>
+                <div className='item_header-actions'>
+                    <button
+                        id={'editCred_' + id}
+                        onClick={handleEditButtonClick}
+                        className='tooltip'
+                    >
+                        <FiEdit3 size={'15px'} />
+                        <span className='tooltip_text'>
+                            Edit credential
+                        </span>
+                    </button>
+                    <button
+                        id={'deleteCred_' + id}
+                        onClick={handleDeleteButtonClick}
+                        className='tooltip'
+                    >
+                        <FiDelete size={'15px'} />
+                        <span className='tooltip_text'>
+                            Delete credential
+                        </span>
+                    </button>
+                </div>
             </div>
             <div className="item_action">
                 <input 

@@ -1,7 +1,6 @@
 import { FiUser, FiKey, FiMail } from "react-icons/fi"
 import { useLogin } from "../../hooks/useLogin"
 import { Link } from "react-router-dom"
-import logo from '../../assets/logo-no-background.png'
 import './Login.css'
 
 type LoginProps = {
@@ -38,7 +37,6 @@ export default function Login({ signUp = false }: LoginProps) {
             }
         }}>
             <div className="form_header">
-                <img src={logo} width={'300px'}/>
                 <h2>{!signUp ? 'Login with your account' : 'Create a new account'}</h2>
                 <Link to={!signUp ? '/signup' : '/login'}>
                     {

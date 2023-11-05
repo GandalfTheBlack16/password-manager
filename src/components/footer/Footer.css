@@ -1,7 +1,5 @@
 footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    width: fit-content;
     margin: 2rem;
     background-color: #232d3f63;
     padding: 1rem 2rem;

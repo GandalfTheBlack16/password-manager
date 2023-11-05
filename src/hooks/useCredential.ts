@@ -1,12 +1,7 @@
 import { FormEvent, SyntheticEvent, useState } from "react"
 import { useNavigate } from "react-router"
-import { generatePassword } from "../services/VaultService"
-
-type Credential = {
-    name: string
-    description: string
-    secret: string
-}
+import { generatePassword, updateCredentials } from "../services/VaultService"
+import {  type Credential } from '../types'
 
 export function useCredential(vauldId: string, credential?: Credential) {
 
@@ -45,7 +40,17 @@ export function useCredential(vauldId: string, credential?: Credential) {
             setInvalidMessage(curr => [...curr, 'Password should have at least 6 characters length'])
         }
         if (invalidMessage.length === 0) {
-            console.log('Submitting form...')
+            updateCredentials(vauldId, [{ id: credential?.id, name, description, secret }])
+                .then(vault => {
+                    navigate('/vaults', {
+                        state: {
+                            vault
+                        }
+                    })
+                })
+                .catch(err => {
+                    setInvalidMessage(err)
+                })
         }
     }
 

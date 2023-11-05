@@ -40,6 +40,7 @@ export function CredentialForm() {
                     placeholder="Name"
                     onChange={handleNameChange}
                     required
+                    autoFocus
                 />
             </label>
             <label>
