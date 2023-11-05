@@ -1,9 +1,7 @@
-import { FormEvent, useState } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { useLocation } from "react-router"
 import { FiEye, FiEyeOff, FiShuffle } from 'react-icons/fi'
-
+import { useCredential } from "../../../hooks/useCredential"
 import './CredentialForm.css'
-import { generatePassword } from "../../../services/VaultService"
 
 export function CredentialForm() {
 
@@ -12,26 +10,20 @@ export function CredentialForm() {
         credential
     } } = useLocation()
 
-    const navigate = useNavigate()
-
-    const [name, setName] = useState<string>(credential?.name)
-    const [description, setDescription] = useState<string>(credential?.description)
-    const [secret, setSecret] = useState<string>(credential?.secret)
-    const [showSecret, setShowSecret] = useState<boolean>(false)
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        console.log('submit')
-    }
-
-    const handleReset = () => {
-        navigate('/vaults')
-    }
-
-    const handleGeneratePassword = () => {
-        const password = generatePassword()
-        setSecret(password)
-    }
+   const {
+    name,
+        description,
+        secret,
+        showSecret,
+        invalidMessage,
+        handleNameChange,
+        handleDescriptionChange,
+        handleSecretChange,
+        handleShowSecretChange,
+        handleSubmit,
+        handleReset,
+        handleGeneratePassword
+   } = useCredential(vaultId, credential)
 
     return (
         <form
@@ -46,7 +38,7 @@ export function CredentialForm() {
                     type="text"
                     value={name} 
                     placeholder="Name"
-                    onChange={(e) => { setName(e.target.value) }}
+                    onChange={handleNameChange}
                     required
                 />
             </label>
@@ -56,7 +48,7 @@ export function CredentialForm() {
                     type="text" 
                     value={description} 
                     placeholder="Description"
-                    onChange={(e) => { setDescription(e.target.value) }}
+                    onChange={handleDescriptionChange}
                 />
             </label>
             <label>
@@ -66,11 +58,15 @@ export function CredentialForm() {
                         type={!showSecret ? "password": 'text'}
                         value={secret}
                         placeholder="Secret"
-                        onChange={(e) => { setSecret(e.target.value) }}
+                        onChange={handleSecretChange}
                         required
                     />
                     <div className="password_actions">
-                        <button className={showSecret ? "toogle tooltip": "tooltip"} type="button" onClick={() => { setShowSecret(curr => !curr) }}>
+                        <button 
+                            className={showSecret ? "toogle tooltip": "tooltip"}
+                            type="button"
+                            onClick={handleShowSecretChange}
+                        >
                             {!showSecret ? <FiEye size={'15px'}/> : <FiEyeOff size={'15px'}/>}
                             <span className="tooltip_text">{!showSecret ? 'Show password': 'Hide password'}</span>
                         </button>
@@ -81,6 +77,11 @@ export function CredentialForm() {
                     </div>
                 </div>
             </label>
+            {
+                invalidMessage.length > 0 && <div className="validation_errors">
+                    { invalidMessage.map(message => <p key={message}>{message}</p>) }
+                </div>
+            }
             <div className="form_actions">
                 <button type="reset">Cancel</button>
                 <button type="submit">Save</button>

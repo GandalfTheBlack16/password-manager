@@ -104,3 +104,11 @@ h2,h3 {
   visibility: visible;
   opacity: 1;
 }
+
+.toogle {
+  background-color: #2f70ad;
+}
+
+.toogle:hover {
+  background-color: #2f70ad;
+}

@@ -65,7 +65,7 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
                 </button>
                 <button
                     id={'showCred_' + id}
-                    className='tooltip'
+                    className={show ? 'toogle tooltip': 'tooltip'}
                     onClick={handleShowButtonClick}
                 >
                     {!show ? <FiEye size={'15px'} /> : <FiEyeOff size={'15px'} />}
