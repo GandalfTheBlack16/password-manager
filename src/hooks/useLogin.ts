@@ -1,6 +1,6 @@
 import { FormEvent, SyntheticEvent, useState } from "react"
 import { loginRequest } from "../services/LoginService"
-import { useAuthStore } from "./useAuthStore"
+import { useAuthStore } from "./stores/useAuthStore"
 import { useNavigate } from "react-router"
 import { signupRequest } from "../services/SignupService"
 

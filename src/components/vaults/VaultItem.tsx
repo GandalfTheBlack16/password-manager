@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FiCopy, FiEye, FiEyeOff, FiEdit3, FiDelete } from 'react-icons/fi' 
 import { useNavigate } from 'react-router'
 import { deleteCredential } from '../../services/VaultService'
+import { useVaultStore } from '../../hooks/stores/useVaultStore'
 
 type Props = {
     id?: string,
@@ -16,6 +17,8 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
     const [show, setShow] = useState<boolean>(false)
 
     const navigate = useNavigate()
+
+    const { updateVault } = useVaultStore()
 
     const handleShowButtonClick = () => {
         setShow(curr => !curr)
@@ -38,9 +41,7 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
         if (id) {
             deleteCredential(vaultId, id)
             .then(vault => {
-                navigate('/vaults', {
-                    state: { vault }
-                })
+                updateVault(vault)
             })
             .catch(err => {
                 console.log(err)

@@ -4,8 +4,9 @@ import { Vaults } from "./components/vaults/Vaults";
 import Login from "./components/login/Login";
 import { PublicPageLayout } from "./layouts/PublicPageLayout";
 import { Account } from "./components/account/Account";
-import { useAuthStore } from "./hooks/useAuthStore";
+import { useAuthStore } from "./hooks/stores/useAuthStore";
 import { CredentialForm } from "./components/vaults/credential/CredentialForm";
+import { useVaultStore } from "./hooks/stores/useVaultStore";
 
 export const router = createBrowserRouter([
     {
@@ -40,5 +41,6 @@ export const router = createBrowserRouter([
 
 function logoutLoader () {
   useAuthStore.getState().logout()
+  useVaultStore.getState().clearVaults()
   return redirect('/')
 }

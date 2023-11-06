@@ -1,4 +1,4 @@
-import { useAuthStore } from "../hooks/useAuthStore"
+import { useAuthStore } from "../hooks/stores/useAuthStore"
 import { Vault, Credential } from "../types"
 
 const BASE_URI = import.meta.env.VITE_BACKEND_BASE_URI

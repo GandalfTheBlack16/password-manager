@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
 import logo from '../assets/logo-no-background.png'
 
 export function PublicPageLayout ({ children }: { children: JSX.Element }) {

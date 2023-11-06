@@ -2,6 +2,7 @@ import { FormEvent, SyntheticEvent, useState } from "react"
 import { useNavigate } from "react-router"
 import { generatePassword, updateCredentials } from "../services/VaultService"
 import {  type Credential } from '../types'
+import { useVaultStore } from "./stores/useVaultStore"
 
 export function useCredential(vauldId: string, credential?: Credential) {
 
@@ -12,6 +13,8 @@ export function useCredential(vauldId: string, credential?: Credential) {
     const [invalidMessage, setInvalidMessage] = useState<string[]>([])
 
     const navigate = useNavigate()
+
+    const { updateVault } = useVaultStore()
 
     const handleNameChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setInvalidMessage([])
@@ -42,11 +45,8 @@ export function useCredential(vauldId: string, credential?: Credential) {
         if (invalidMessage.length === 0) {
             updateCredentials(vauldId, [{ id: credential?.id, name, description, secret }])
                 .then(vault => {
-                    navigate('/vaults', {
-                        state: {
-                            vault
-                        }
-                    })
+                    updateVault(vault)
+                    navigate('/vaults')
                 })
                 .catch(err => {
                     setInvalidMessage(err)

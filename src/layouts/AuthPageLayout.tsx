@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
 import { Header } from "../components/header/Header";
 
 export function AuthPageLayout ({ children }: { children: JSX.Element }) {
