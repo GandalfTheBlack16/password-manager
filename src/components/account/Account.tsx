@@ -24,7 +24,7 @@ export function Account() {
 
     return (
         <>
-            <h2>Your Account</h2>
+            <h2>Your account's details</h2>
             <form
                 className="account_form"
                 onReset={handleReset}

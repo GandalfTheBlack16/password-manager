@@ -96,3 +96,12 @@
     left: -4%;
     border-color: transparent #2f70ad transparent transparent;
 }
+
+.icon_button {
+    width: fit-content;
+    padding: .8rem 1rem;
+}
+
+.validation {
+    margin-block-end: 1rem;
+}

@@ -50,3 +50,8 @@ export interface UpdateAccountServiceData {
     username: string
     email: string
 }
+
+export interface UpdatePasswordServiceProps {
+    currPassword: string
+    newPassword: string
+}

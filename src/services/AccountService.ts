@@ -1,4 +1,4 @@
-import { UpdateAccountServiceData, UpdateAccountServiceProps } from "../types"
+import { UpdateAccountServiceData, UpdateAccountServiceProps, UpdatePasswordServiceProps } from "../types"
 import { buildHeaders, checkTokenExpired } from "./Commons"
 
 const BASE_URI = import.meta.env.VITE_BACKEND_BASE_URI
@@ -62,4 +62,27 @@ export const updateUserDetails = async ({ id, username, email }: UpdateAccountSe
         throw Error(response.statusText)
     }
     return data.user as UpdateAccountServiceData
+}
+
+export const updatePassword = async ({ currPassword, newPassword }: UpdatePasswordServiceProps) => {
+    const uri = `${BASE_URI}/api/users/password`
+    const headers = buildHeaders()
+    headers.set('Content-Type', 'application/json')
+    const payload = {
+        oldPassword: currPassword,
+        newPassword
+    }
+
+    const response = await fetch(uri, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    if (!response.ok) {
+        checkTokenExpired(response.status, data)
+        throw Error(data.message)
+    }
+
+    return data.message as string
 }
