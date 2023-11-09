@@ -1,5 +1,93 @@
-export function Account () {
+import { AvailableIcon } from './AvailableIcon'
+import './Account.css'
+import { useAccount } from '../../hooks/useAccount'
+
+export function Account() {
+
+    const {
+        invalidUsername,
+        invalidEmail,
+        username,
+        email,
+        emailAvailable,
+        usernameAvailable,
+        loadingUsername,
+        loadingEmail,
+        handleChangeUsername,
+        handleChangeEmail,
+        handleBlurUsername,
+        handleBlurEmail,
+        handleChangePassword,
+        handleReset,
+        handleSubmit
+    } = useAccount()
+
     return (
-        <h1>Your Account</h1>
+        <>
+            <h2>Your Account</h2>
+            <form
+                className="account_form"
+                onReset={handleReset}
+                onSubmit={handleSubmit}
+            >
+                <div className='inputs'>
+                    <label>
+                        Username
+                        <div>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={handleChangeUsername}
+                                onBlur={handleBlurUsername}
+                                className={invalidUsername ? 'invalid' : ''}
+                                required
+                            />
+                            {loadingUsername && <span className='loading'></span>}
+                            {!loadingUsername && usernameAvailable.fetched &&
+                                <AvailableIcon
+                                    available={usernameAvailable.available}
+                                    kind='Username'
+                                />
+                            }
+                        </div>
+                        {invalidUsername && <span className='validation_message'>
+                            Username should have at least 3 characters
+                        </span>}
+                    </label>
+                    <label>
+                        Email
+                        <div>
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={handleChangeEmail}
+                                onBlur={handleBlurEmail}
+                                className={invalidEmail ? 'invalid' : ''}
+                                required
+                            />
+                            {loadingEmail && <span className='loading'></span>}
+                            {!loadingEmail && emailAvailable.fetched &&
+                                <AvailableIcon
+                                    available={emailAvailable.available}
+                                    kind='Email'
+                                />
+                            }
+                        </div>
+                        {invalidEmail && <span className='validation_message'>
+                            Email should be a valid email address
+                        </span>}
+                    </label>
+                </div>
+                <div className='change_password'>
+                    <button type="button" onClick={handleChangePassword}>
+                        Change password
+                    </button>
+                </div>
+                <div className='form_actions'>
+                    <button type="reset">Restore</button>
+                    <button type="submit">Update and logout</button>
+                </div>
+            </form>
+        </>
     )
 }

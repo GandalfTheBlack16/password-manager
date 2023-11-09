@@ -1,6 +1,7 @@
 import { Navigate } from "react-router";
 import { useAuthStore } from "../hooks/stores/useAuthStore";
 import logo from '../assets/logo-no-background.png'
+import { Footer } from "../components/footer/Footer";
 
 export function PublicPageLayout ({ children }: { children: JSX.Element }) {
     const { isLogged } = useAuthStore()
@@ -15,6 +16,7 @@ export function PublicPageLayout ({ children }: { children: JSX.Element }) {
             <main>
                 { children }
             </main>
+            <Footer />
         </>
     )
 }

@@ -102,7 +102,7 @@ export function useLogin() {
         loginRequest({ username, password })
             .then((data) => {
                 const { accessToken, userInfo } = data
-                login(accessToken, userInfo.id, userInfo.username)
+                login(accessToken, userInfo.id, userInfo.username, userInfo.email)
                 navigate('/vaults')
             })
             .catch(err => {

@@ -7,6 +7,7 @@ import { Account } from "./components/account/Account";
 import { useAuthStore } from "./hooks/stores/useAuthStore";
 import { CredentialForm } from "./components/vaults/credential/CredentialForm";
 import { useVaultStore } from "./hooks/stores/useVaultStore";
+import { ChangeCredentialForm } from './components/account/credentials/ChangeCredentialForm';
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
     {
       path: '/account',
       element: <AuthPageLayout><Account /></AuthPageLayout>
+    },
+    {
+      path: '/account/password',
+      element: <AuthPageLayout><ChangeCredentialForm /></AuthPageLayout>
     },
     {
       path: '/login',

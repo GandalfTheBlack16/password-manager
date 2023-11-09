@@ -1,27 +1,7 @@
-import { useAuthStore } from "../hooks/stores/useAuthStore"
 import { Vault, Credential } from "../types"
+import { buildHeaders, checkTokenExpired } from "./Commons"
 
 const BASE_URI = import.meta.env.VITE_BACKEND_BASE_URI
-const TOKEN_EXPIRED_MESSAGE = 'Access token has expired'
-
-const buildHeaders = () => {
-    const { accessToken } = useAuthStore.getState()
-    if (!accessToken) {
-        throw Error('Not authenticated')
-    }
-    const headers = new Headers()
-    headers.set('Accept', 'application/json')
-    headers.set('Authorization', `Bearer ${accessToken}`)
-    return headers
-}
-
-const checkTokenExpired = (statusCode: number, payload: { message: string }) => {
-    const { logout } = useAuthStore.getState()
-    if (statusCode === 401 && payload.message === TOKEN_EXPIRED_MESSAGE) {
-        console.warn('Access token has expired. Performing logout...')
-        logout()
-    }
-}
 
 export const generatePassword = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -6,8 +6,10 @@ interface AuthState {
     accessToken: string
     userId: string
     username: string
-    login: (token: string, id: string, username: string) => void
+    email: string
+    login: (token: string, id: string, username: string, email: string) => void
     logout: () => void
+    updateDetails: (username: string, email: string) => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -17,8 +19,10 @@ export const useAuthStore = create<AuthState>()(
             accessToken: '',
             userId: '',
             username: '',
-            login: (token, id, username) => set(() => ({ isLogged: true, accessToken: token, userId: id, username })),
-            logout: () => set(() => ({ isLogged: false, accessToken: '', userId: '', username: '' }))
+            email: '',
+            login: (token, id, username, email) => set(() => ({ isLogged: true, accessToken: token, userId: id, username, email })),
+            logout: () => set(() => ({ isLogged: false, accessToken: '', userId: '', username: '', email: '' })),
+            updateDetails: (username, email) => set(() => ({ username, email }))
         }),
         { name: 'auth-store', storage: createJSONStorage(() => sessionStorage) }
     )

@@ -39,3 +39,14 @@ export interface Credential {
     name:        string;
     secret:      string;
 }
+
+export interface UpdateAccountServiceProps {
+    id: string
+    username?: string
+    email?: string
+}
+
+export interface UpdateAccountServiceData {
+    username: string
+    email: string
+}
