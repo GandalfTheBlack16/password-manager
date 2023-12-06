@@ -14,6 +14,10 @@
     gap: 1rem;
 }
 
+.login_form .icon {
+    font-size: 25px;
+}
+
 ::placeholder {
     color: #a9a9a9;
     font-weight: 300;
@@ -50,4 +54,65 @@ button {
 .validation_error span.success {
     color: white;
     font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .form_header {
+        font-size: 14px;
+    }
+
+    .login_form {
+        gap: 2rem;
+    }
+    
+    .login_form label {
+        width: 90%;
+        gap: .7rem
+    }
+
+    .login_form .icon {
+        font-size: 20px;
+    }
+
+    .login_form input {
+        width: 80%;
+        font-size: 14px;
+    }
+
+    .login_form button {
+        width: 80%;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .form_header {
+        font-size: 10px;
+    }
+
+    .login_form {
+        gap: 1rem;
+    }
+    
+    .login_form label {
+        width: 100%;
+        gap: .5rem
+    }
+
+    .login_form .icon {
+        font-size: 15px;
+    }
+
+    .login_form input {
+        width: 80%;
+        font-size: 11px;
+        padding: .5rem .7rem;
+    }
+
+    .login_form button {
+        width: 100%;
+        font-size: 12px;
+        padding: .6rem;
+    }
 }

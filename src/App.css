@@ -26,6 +26,21 @@ main {
   gap: 4rem;
 }
 
+.logo {
+  margin: auto;
+  width: 350px;
+}
+
+@media (max-width: 425px) {
+  main {
+      padding: 1rem;
+  }
+
+  .logo {
+    width: 100%;
+  }
+}
+
 input[type=text], input[type=password] {
   background-color: #0d5c70;
   border: 1px solid transparent;
