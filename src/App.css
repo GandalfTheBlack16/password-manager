@@ -31,21 +31,6 @@ main {
   width: 350px;
 }
 
-@media (max-width: 425px) {
-  #root {
-    padding: 1rem;
-    gap: 1rem;
-  }
-
-  main {
-      padding: 1rem;
-  }
-
-  .logo {
-    width: 100%;
-  }
-}
-
 input[type=text], input[type=password] {
   background-color: #0d5c70;
   border: 1px solid transparent;
@@ -74,6 +59,30 @@ button:disabled {
 button:disabled:hover {
   cursor: not-allowed;
 }
+
+@media (max-width: 425px) {
+  #root {
+    padding: 1rem;
+    gap: 1rem;
+    overflow-x: hidden;
+  }
+
+  main {
+    padding: 1rem;
+    font-size: 12px;
+    gap: 1rem;
+  }
+
+  .logo {
+    width: 100%;
+  }
+
+  button {
+    padding: .6rem 1rem;
+    font-size: 13px;
+  }
+}
+
 
 a {
   color: white;

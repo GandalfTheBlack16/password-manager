@@ -71,11 +71,12 @@
     animation: rotation 1s linear infinite;
 }
 
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
-
+    
     100% {
         transform: rotate(360deg);
     }
@@ -104,4 +105,23 @@
 
 .validation {
     margin-block-end: 1rem;
+}
+
+@media (max-width: 425px) {
+    .account_form {
+        width: 80%;
+    }
+    .inputs label {
+        gap: 5px;
+    }
+    .account_form input, .input_group input  {
+        font-size: 12px;
+        padding: .5rem 1rem;
+    }
+    .validation_message {
+        font-size: 12px;
+    }
+    .icon_button {
+        padding: .5rem .6rem;
+    }
 }
