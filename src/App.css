@@ -32,6 +32,11 @@ main {
 }
 
 @media (max-width: 425px) {
+  #root {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
   main {
       padding: 1rem;
   }

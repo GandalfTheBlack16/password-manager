@@ -44,3 +44,45 @@ header {
   border: transparent;
   background-color: #0d5c707e;
 }
+
+@media (max-width: 768px) {
+  .logo img {
+    width: 240px;
+  }
+  .main_menu {
+    gap: .7rem;
+  }
+  .menu_item {
+    font-size: 12px;
+    padding: .4rem 1rem;
+  }
+}
+
+@media (max-width: 425px) {
+  header {
+    flex-direction: column;
+    gap: .2rem;
+    padding: .8rem;
+  }
+  .logo img {
+    width: 180px;
+  }
+  .main_menu {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .menu_item {
+    padding: .5rem 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .menu_item {
+    padding: .3rem;
+    font-size: 10px;
+  }
+}
+
+
