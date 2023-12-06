@@ -26,12 +26,12 @@ export function Vaults() {
                                         <button
                                             onClick={() => { handleAddCredential(vault.id) }}
                                         >
-                                            <FiPlus size={'20px'} /> Add credential
+                                            <FiPlus className='icon' /> Add credential
                                         </button>
                                         <button
                                             onClick={() => { handleRemoveVault(vault.id) }}
                                         >
-                                            <FiTrash size={'20px'} /> Remove vault
+                                            <FiTrash className='icon' /> Remove vault
                                         </button>
                                     </div>
                                 </section>

@@ -12,7 +12,7 @@ export function PublicPageLayout ({ children }: { children: JSX.Element }) {
 
     return (
         <>
-            <img src={logo} style={{margin: 'auto'}} width={'350px'}/>
+            <img src={logo} className='logo'/>
             <main>
                 { children }
             </main>

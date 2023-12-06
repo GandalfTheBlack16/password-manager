@@ -47,7 +47,7 @@ export default function Login({ signUp = false }: LoginProps) {
             </div>
             <label>
                 <FiUser
-                    size="25px"
+                    className='icon'
                 />
                 <input
                     type="text"
@@ -62,7 +62,7 @@ export default function Login({ signUp = false }: LoginProps) {
                 signUp &&
                 <label>
                     <FiMail
-                        size="25px"
+                        className='icon'
                     />
                     <input
                         type="text"
@@ -76,7 +76,7 @@ export default function Login({ signUp = false }: LoginProps) {
             }
             <label>
                 <FiKey
-                    size="25px"
+                    className='icon'
                 />
                 <input
                     type="password"
@@ -91,7 +91,7 @@ export default function Login({ signUp = false }: LoginProps) {
                 signUp &&
                 <label>
                     <FiKey
-                        size="25px"
+                        className='icon'
                     />
                     <input
                         type="password"
