@@ -55,3 +55,8 @@ export interface UpdatePasswordServiceProps {
     currPassword: string
     newPassword: string
 }
+
+export interface RecoveryEmailResponse {
+    message: string;
+    status:  string;
+}

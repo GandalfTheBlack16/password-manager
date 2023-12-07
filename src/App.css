@@ -31,7 +31,7 @@ main {
   width: 350px;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   background-color: #0d5c70;
   border: 1px solid transparent;
   border-radius: 15px;
@@ -83,6 +83,17 @@ button:disabled:hover {
   }
 }
 
+@media (max-width: 375px) {
+  button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  button {
+    font-size: 11px;
+  }
+}
 
 a {
   color: white;
