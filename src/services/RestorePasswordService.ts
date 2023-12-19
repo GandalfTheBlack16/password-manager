@@ -18,3 +18,20 @@ export const sendRecoveryEmail = async (email: string): Promise<RecoveryEmailRes
     const data = await response.json() as RecoveryEmailResponse
     return data
 }
+
+export const restorePassword = async (password: string, token: string) => {
+    const uri = BASE_URI + '/restore-password' + `/${token}`
+    const payload = {
+        password
+    }
+    const response = await fetch(uri, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    if (!response.ok) {
+        throw response.statusText
+    }
+    const data = await response.json() as RecoveryEmailResponse
+    return data
+}

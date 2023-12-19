@@ -56,37 +56,6 @@ button {
     font-weight: 600;
 }
 
-.restore-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70%;
-    margin: auto;
-    gap: 1.5rem;
-}
-
-.restore-form label {
-    display: flex;
-    width: inherit;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-}
-
-.restore-form input {
-    width: 100%;
-    padding: .6rem .8rem;
-    font-size: 14px;
-}
-
-.restore-actions {
-    width: inherit;
-    display: flex;
-    margin-top: 15px;
-    gap: 10px;
-    justify-content: center;
-}
-
 @media screen and (max-width: 768px) {
     
     .form_header {
@@ -115,21 +84,8 @@ button {
         width: 80%;
         font-size: 14px;
     }
-
-    .restore-form input {
-        padding: 5px 10px;
-    }
-
 }
 
-@media (max-width: 425px) {
-    .restore-form {
-        width: 90%;
-    }
-    .restore-form input {
-        font-size: 12px;
-    }
-}
 
 @media screen and (max-width: 320px) {
     .form_header {
