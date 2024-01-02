@@ -17,7 +17,8 @@
 
 .form label input {
     width: 100%;
-    padding: .6rem 1rem;
+    padding: .7rem 1rem;
+    font-size: 14px;
 }
 
 .form_actions {
@@ -46,9 +47,11 @@
         margin: unset;
         gap: 1rem;
     }
+
     .form label input {
         padding: .4rem .8rem;
     }
+
     .form button {
         max-width: unset;
     }
