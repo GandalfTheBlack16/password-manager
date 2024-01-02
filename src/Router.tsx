@@ -8,6 +8,7 @@ import { useAuthStore } from "./hooks/stores/useAuthStore";
 import { CredentialForm } from "./components/vaults/credential/CredentialForm";
 import { useVaultStore } from "./hooks/stores/useVaultStore";
 import { ChangeCredentialForm } from './components/account/credentials/ChangeCredentialForm';
+import { RestorePasswordPage } from "./pages/restore-password";
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +38,17 @@ export const router = createBrowserRouter([
     {
       path: '/signup',
       element: <PublicPageLayout><Login signUp={true} /></PublicPageLayout>
+    },
+    {
+      path: '/restore-password',
+      children: [
+        {
+          path: ':token', element: <PublicPageLayout hiddenFooter><RestorePasswordPage /></PublicPageLayout>
+        },
+        {
+          path: '', element: <PublicPageLayout hiddenFooter><RestorePasswordPage /></PublicPageLayout>
+        }
+      ]
     },
     {
       path: '/logout',

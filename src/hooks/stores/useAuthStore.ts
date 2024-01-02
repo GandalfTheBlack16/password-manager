@@ -24,6 +24,6 @@ export const useAuthStore = create<AuthState>()(
             logout: () => set(() => ({ isLogged: false, accessToken: '', userId: '', username: '', email: '' })),
             updateDetails: (username, email) => set(() => ({ username, email }))
         }),
-        { name: 'auth-store', storage: createJSONStorage(() => sessionStorage) }
+        { name: 'auth-store', storage: createJSONStorage(() => localStorage) }
     )
 )

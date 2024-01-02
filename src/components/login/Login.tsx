@@ -103,13 +103,19 @@ export default function Login({ signUp = false }: LoginProps) {
                     />
                 </label>
             }
-            <div className="validation_error">
-                {invalidUser || invalidEmail && <span>Username should have at least 4 characters and email should be a valid address</span>}
-                {invalidPassword && <span>Password should have at least 6 characters</span>}
-                {invalidConfirmPassword && <span>Passwords don't match</span>}
-                {invalidCredentials && <span>Username does not exists or password is incorrect</span>}
-                <span className="success">{signupResult}</span>
-            </div>
+            {
+                !signUp && <Link to='/restore-password'>Forgot your password?</Link>
+            }
+            {
+                (invalidUser || invalidEmail || invalidPassword || invalidConfirmPassword || invalidCredentials) &&
+                <div className="validation_error">
+                    {invalidUser || invalidEmail && <span>Username should have at least 4 characters and email should be a valid address</span>}
+                    {invalidPassword && <span>Password should have at least 6 characters</span>}
+                    {invalidConfirmPassword && <span>Passwords don't match</span>}
+                    {invalidCredentials && <span>Username does not exists or password is incorrect</span>}
+                    <span className="success">{signupResult}</span>
+                </div>
+            }
             <button
                 disabled={invalidUser || invalidPassword}
             >{signUp ? 'Create account' : 'Login'}</button>

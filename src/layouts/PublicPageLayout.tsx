@@ -2,8 +2,14 @@ import { Navigate } from "react-router";
 import { useAuthStore } from "../hooks/stores/useAuthStore";
 import logo from '../assets/logo-no-background.png'
 import { Footer } from "../components/footer/Footer";
+import { Link } from "react-router-dom";
 
-export function PublicPageLayout ({ children }: { children: JSX.Element }) {
+type Props = {
+    children: JSX.Element
+    hiddenFooter?: boolean
+}
+
+export function PublicPageLayout ({ children, hiddenFooter }: Props) {
     const { isLogged } = useAuthStore()
 
     if(isLogged){
@@ -12,11 +18,15 @@ export function PublicPageLayout ({ children }: { children: JSX.Element }) {
 
     return (
         <>
-            <img src={logo} className='logo'/>
+            <Link to='/login'>
+                <img src={logo} className='logo'/>
+            </Link>
             <main>
                 { children }
             </main>
-            <Footer />
+            {
+                !hiddenFooter && <Footer />
+            }
         </>
     )
 }
