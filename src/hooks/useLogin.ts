@@ -3,22 +3,22 @@ import { loginRequest } from "../services/LoginService"
 import { useAuthStore } from "./stores/useAuthStore"
 import { useNavigate } from "react-router"
 import { signupRequest } from "../services/SignupService"
+import { useToast } from "./useToast"
 
 export function useLogin() {
 
     const navigate = useNavigate()
     const { login } = useAuthStore()
+    const { setError, setSuccess } = useToast()
 
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
-    const [signupResult, setSignupResult] = useState<string>('')
     const [invalidUser, setInvalidUser] = useState<boolean>(false)
     const [invalidEmail, setInvalidEmail] = useState<boolean>(false)
     const [invalidPassword, setInvalidPassword] = useState<boolean>(false)
     const [invalidConfirmPassword, setInvalidConfirmPassword] = useState<boolean>(false)
-    const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false)
 
     const onUsernameChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setUsername(event.currentTarget.value)
@@ -95,7 +95,6 @@ export function useLogin() {
 
     const handleLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        setInvalidCredentials(false)
         if (!validUsername() || !validPassword()) {
             return
         }
@@ -107,8 +106,11 @@ export function useLogin() {
             })
             .catch(err => {
                 if (err === 'Unauthorized') {
-                    setInvalidCredentials(true)
+                    setError('Invalid username/email address or password')
                 }
+                else {
+                    setError(`Unexpected error on login request: ${err.message}`)
+                } 
             })
             .finally(() => {
                 setPassword('')
@@ -124,7 +126,7 @@ export function useLogin() {
         signupRequest({ username, email, password })
             .then(data => {
                 if (data.status === 'Success') {
-                    setSignupResult(data.message)
+                    setSuccess(data.message)
                     setEmail('')
                     setPassword('')
                     setConfirmPassword('')
@@ -138,12 +140,10 @@ export function useLogin() {
         email,
         password,
         confirmPassword,
-        signupResult,
         invalidUser,
         invalidEmail,
         invalidPassword,
         invalidConfirmPassword,
-        invalidCredentials,
         onUsernameChange,
         onEmailChange,
         onPasswordChange,

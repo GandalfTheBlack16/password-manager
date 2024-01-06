@@ -18,14 +18,12 @@ export default function Login({ signUp = false }: LoginProps) {
         invalidEmail,
         invalidPassword,
         invalidConfirmPassword,
-        invalidCredentials,
         onUsernameChange,
         onEmailChange,
         onPasswordChange,
         onConfirmPasswordChange,
         handleLogin,
-        handleSignup,
-        signupResult
+        handleSignup
     } = useLogin()
 
     return (
@@ -107,13 +105,11 @@ export default function Login({ signUp = false }: LoginProps) {
                 !signUp && <Link to='/restore-password'>Forgot your password?</Link>
             }
             {
-                (invalidUser || invalidEmail || invalidPassword || invalidConfirmPassword || invalidCredentials) &&
+                (invalidUser || invalidEmail || invalidPassword || invalidConfirmPassword ) &&
                 <div className="validation_error">
                     {invalidUser || invalidEmail && <span>Username should have at least 4 characters and email should be a valid address</span>}
                     {invalidPassword && <span>Password should have at least 6 characters</span>}
                     {invalidConfirmPassword && <span>Passwords don't match</span>}
-                    {invalidCredentials && <span>Username does not exists or password is incorrect</span>}
-                    <span className="success">{signupResult}</span>
                 </div>
             }
             <button
