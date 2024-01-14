@@ -95,7 +95,12 @@ export function useLogin() {
 
     const handleLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (!validUsername() || !validPassword()) {
+        if (!validUsername()) {
+            setError('Username should have 4 characters at least or to be a valid email address')
+            return
+        }
+        if (!validPassword()) {
+            setError('Password should have 6 characters at least')
             return
         }
         loginRequest({ username, password })
@@ -120,8 +125,21 @@ export function useLogin() {
     const handleSignup = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         
-        if (!validUsername() || !validEmail(email) || !validPassword() || !validConfirmPassword()) {  
+        if (!validUsername()) {  
+            setError('Username should be 4 character length at least')
            return
+        }
+        if (!validEmail(email)) {
+            setError('Email should be a valid email address')
+            return
+        }
+        if (!validPassword()) {
+            setError('Password should be 6 character length at least')
+            return
+        }
+        if(!validConfirmPassword()) {
+            setError('Passwords don\'t match')
+            return
         }
         signupRequest({ username, email, password })
             .then(data => {

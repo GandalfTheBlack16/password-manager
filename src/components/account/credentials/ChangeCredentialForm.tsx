@@ -3,11 +3,11 @@ import { useNavigate } from "react-router"
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import '../Account.css'
 import { updatePassword } from "../../../services/AccountService"
+import { useToast } from "../../../hooks/useToast"
 
 export function ChangeCredentialForm () {
     
     const navigate = useNavigate()
-
 
     const [currPassword, setCurrPassword] = useState<string>('')
     const [newPassword, setNewPassword] = useState<string>('')
@@ -19,6 +19,8 @@ export function ChangeCredentialForm () {
 
     const [invalidOldPwd, setInvalidOldPwd] = useState<boolean>(false)
     const [pwdNotMatch, setPwdNotMatch] = useState<boolean>(false)
+
+    const { setSuccess, setError } = useToast()
 
     const handleCurrPasswordChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setCurrPassword(event.currentTarget.value)
@@ -43,15 +45,16 @@ export function ChangeCredentialForm () {
         event.preventDefault()
         if (newPassword !== confirmPassword) {
             setPwdNotMatch(true)
+            setError('Input passwords don\'t match')
             return
         }
         updatePassword({ currPassword, newPassword })
             .then(message => {
-                console.log(message)
+                setSuccess(message)
                 navigate('/logout')
             })
             .catch((err: Error) => {
-                console.log(err.message)
+                setError(err.message)
                 if (err.message.includes('Current password does not match')){
                     setInvalidOldPwd(true)
                 }
@@ -125,14 +128,6 @@ export function ChangeCredentialForm () {
                             </button>
                         </div>
                     </label>
-                </div>
-                <div className="validation">
-                    {
-                        pwdNotMatch && <span className="validation_message">Input passwords don't match</span>
-                    }
-                    {
-                        invalidOldPwd && <span className="validation_message">Current password incorrect</span>
-                    }
                 </div>
                 <div className="form_actions">
                     <button type="reset">Back</button>

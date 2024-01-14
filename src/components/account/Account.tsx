@@ -50,9 +50,6 @@ export function Account() {
                                 />
                             }
                         </div>
-                        {invalidUsername && <span className='validation_message'>
-                            Username should have at least 3 characters
-                        </span>}
                     </label>
                     <label>
                         Email
@@ -73,9 +70,6 @@ export function Account() {
                                 />
                             }
                         </div>
-                        {invalidEmail && <span className='validation_message'>
-                            Email should be a valid email address
-                        </span>}
                     </label>
                 </div>
                 <div className='change_password'>

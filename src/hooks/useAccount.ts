@@ -2,6 +2,7 @@ import { useState, SyntheticEvent } from "react"
 import { checkUsernameAvailable, checkEmailAvailable, updateUserDetails } from '../services/AccountService';
 import { useAuthStore } from "./stores/useAuthStore"
 import { useNavigate } from "react-router";
+import { useToast } from "./useToast";
 
 type Available = {
     fetched: boolean,
@@ -30,6 +31,8 @@ export function useAccount () {
     const [usernameAvailable, setUsernameAvailable] = useState<Available>({ fetched: false, available: false })
     const [emailAvailable, setEmailAvailable] = useState<Available>({ fetched: false, available: false })
 
+    const { setSuccess, setError } = useToast()
+
     const handleChangeUsername = (event: SyntheticEvent<HTMLInputElement>) => {
         setUsername(event.currentTarget.value)
         setInvalidUsername(false)
@@ -44,6 +47,7 @@ export function useAccount () {
             checkUsernameAvailable(username)
                 .then(available => {
                     setUsernameAvailable({ fetched: true, available })
+                    setSuccess(`Username ${username} is available`)
                 })
                 .finally(() => {
                     setLoadingUsername(false)
@@ -93,6 +97,14 @@ export function useAccount () {
         const { fetched: usernameFetched, available: usernameAvbl } = usernameAvailable
         const { fetched: emailFetched, available: emailAvbl } = emailAvailable
 
+        if (invalidEmail) {
+            setError('Email should be a valid email address')
+        }
+
+        if (invalidUsername) {
+            setError('Username should have at least 3 characters')
+        }
+
         if (invalidEmail || invalidUsername || (!usernameFetched && !emailFetched)) {
             return
         }
@@ -106,13 +118,13 @@ export function useAccount () {
             username: usernameFetched ? username: undefined,
             email: emailFetched ? email: undefined
         }).then(({ email, username }) => {
-            console.log('User details updated successfully. Logging out...')
+            setSuccess('User details updated successfully. Logging out...')
             updateDetails(username, email)
             setUsernameAvailable({ fetched: false, available: false })
             setEmailAvailable({ fetched: false, available: false })
             navigate('/logout')
         }).catch(err => {
-            console.log('Error updating user account:', err)
+            setError(`Error updating user account: ${err}`)
         })
     }
 
