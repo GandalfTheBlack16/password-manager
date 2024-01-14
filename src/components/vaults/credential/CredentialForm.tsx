@@ -15,7 +15,7 @@ export function CredentialForm() {
         description,
         secret,
         showSecret,
-        invalidMessage,
+        invalidName,
         handleNameChange,
         handleDescriptionChange,
         handleSecretChange,
@@ -39,6 +39,7 @@ export function CredentialForm() {
                     value={name} 
                     placeholder="Name"
                     onChange={handleNameChange}
+                    style={ invalidName ? { borderColor: 'red' } : {}}
                     required
                     autoFocus
                 />
@@ -78,11 +79,6 @@ export function CredentialForm() {
                     </div>
                 </div>
             </label>
-            {
-                invalidMessage.length > 0 && <div className="validation_errors">
-                    { invalidMessage.map(message => <p key={message}>{message}</p>) }
-                </div>
-            }
             <div className="form_actions">
                 <button type="reset">Cancel</button>
                 <button type="submit">Save</button>

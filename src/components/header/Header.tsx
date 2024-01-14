@@ -2,9 +2,11 @@ import { FiUnlock, FiLogOut, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
 import logo from "../../assets/logo-no-background.png"
 import './Header.css'
+import { useToast } from '../../hooks/useToast'
 
 export function Header() {
     const { pathname } = useLocation()
+    const { setSuccess } = useToast()
     return (
         <header>
             <Link
@@ -35,6 +37,7 @@ export function Header() {
                     <Link
                         className='menu_item'
                         to={'/logout'}
+                        onClick={() => { setSuccess('Logging out...') }}
                     >
                         <FiLogOut />
                         <span>Logout</span>

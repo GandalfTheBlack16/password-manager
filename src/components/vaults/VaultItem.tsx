@@ -3,6 +3,7 @@ import { FiCopy, FiEye, FiEyeOff, FiEdit3, FiDelete } from 'react-icons/fi'
 import { useNavigate } from 'react-router'
 import { deleteCredential } from '../../services/VaultService'
 import { useVaultStore } from '../../hooks/stores/useVaultStore'
+import { useToast } from '../../hooks/useToast'
 
 type Props = {
     id?: string,
@@ -20,12 +21,15 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
 
     const { updateVault } = useVaultStore()
 
+    const { setConfirmMessage, setSuccess } = useToast()
+
     const handleShowButtonClick = () => {
         setShow(curr => !curr)
     }
 
     const handleCopyButtonClick = () => {
         navigator.clipboard.writeText(secret)
+        setSuccess('Secret copied to clipboard')
     }
 
     const handleEditButtonClick = () => {
@@ -39,12 +43,14 @@ export function VaultItem ({ id, vaultId, name, description, secret }: Props) {
 
     const handleDeleteButtonClick = () => {
         if (id) {
-            deleteCredential(vaultId, id)
-            .then(vault => {
-                updateVault(vault)
-            })
-            .catch(err => {
-                console.log(err)
+            setConfirmMessage(`Removing ${name} credential. Are you sure?`, () => {
+                deleteCredential(vaultId, id)
+                .then(vault => {
+                    updateVault(vault)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             })
         }
     }

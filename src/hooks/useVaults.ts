@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { fetchVaults, deleteVault, createVault } from "../services/VaultService"
 import { useVaultStore } from "./stores/useVaultStore"
+import { useToast } from "./useToast"
 
 export function useVaults() {
 
@@ -17,6 +18,8 @@ export function useVaults() {
 
     const navigate = useNavigate()
 
+    const { setSuccess, setError, setConfirmMessage } = useToast()
+
     useEffect(() => {
         if (!loadedOnce) {
             setLoading(true)
@@ -25,13 +28,13 @@ export function useVaults() {
                     setVaults(vaults)
                 })
                 .catch(err => {
-                    console.log(err)
+                    setError(err)
                 })
                 .finally(() => {
                     setLoading(false)
                 })
         }
-    }, [setVaults, loadedOnce])
+    }, [setVaults, loadedOnce, setError])
 
     const handleAddCredential = (vaultId: string) => {
         navigate(`credentials`, {
@@ -42,22 +45,25 @@ export function useVaults() {
     }
 
     const handleRemoveVault = (vaultId: string) => {
-        deleteVault(vaultId)
-            .then(() => {
-                deleteVaultById(vaultId)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        setConfirmMessage('You\'re about to remove the vault. Are you sure?', () => {
+            deleteVault(vaultId)
+                .then(() => {
+                    deleteVaultById(vaultId)
+                })
+                .catch(err => {
+                    setError(err)
+                })
+        })
     }
 
     const handleCreateVault = () => {
         createVault()
             .then(vault => {
                 addVaultToContext(vault)
+                setSuccess('Vault created successfully')
             })
             .catch(err => {
-                console.log(err)
+                setError(err)
             })
     }
 

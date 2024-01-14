@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { generatePassword, updateCredentials } from "../services/VaultService"
 import {  type Credential } from '../types'
 import { useVaultStore } from "./stores/useVaultStore"
+import { useToast } from "./useToast"
 
 export function useCredential(vauldId: string, credential?: Credential) {
 
@@ -10,15 +11,17 @@ export function useCredential(vauldId: string, credential?: Credential) {
     const [description, setDescription] = useState<string>(credential?.description ?? '')
     const [secret, setSecret] = useState<string>(credential?.secret ?? '')
     const [showSecret, setShowSecret] = useState<boolean>(false)
-    const [invalidMessage, setInvalidMessage] = useState<string[]>([])
+    const [invalidName, setInvalidName] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
     const { updateVault } = useVaultStore()
 
+    const { setSuccess, setError } = useToast()
+
     const handleNameChange = (event: SyntheticEvent<HTMLInputElement>) => {
-        setInvalidMessage([])
         setName(event.currentTarget.value)
+        setInvalidName(false)
     }
     
     const handleDescriptionChange = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -26,7 +29,6 @@ export function useCredential(vauldId: string, credential?: Credential) {
     }
     
     const handleSecretChange = (event: SyntheticEvent<HTMLInputElement>) => {
-        setInvalidMessage([])
         setSecret(event.currentTarget.value)
     }
 
@@ -37,21 +39,21 @@ export function useCredential(vauldId: string, credential?: Credential) {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (name.length < 3) {
-            setInvalidMessage(curr => [...curr, 'Credential name must be at least 3 characters length']) 
+            setInvalidName(true)
+            setError('Credential name must be at least 3 characters length')
+            return
         }
-        if (secret.length < 6) {
-            setInvalidMessage(curr => [...curr, 'Password should have at least 6 characters length'])
-        }
-        if (invalidMessage.length === 0) {
-            updateCredentials(vauldId, [{ id: credential?.id, name, description, secret }])
-                .then(vault => {
-                    updateVault(vault)
-                    navigate('/vaults')
-                })
-                .catch(err => {
-                    setInvalidMessage(err)
-                })
-        }
+        updateCredentials(vauldId, [{ id: credential?.id, name, description, secret }])
+            .then(vault => {
+                updateVault(vault)
+                setSuccess(
+                    !credential?.id ? 'Credential created!': 'Credential updated!'
+                    )
+                navigate('/vaults')
+            })
+            .catch(err => {
+                setError(err)
+            })
     }
 
     const handleReset = () => {
@@ -61,6 +63,7 @@ export function useCredential(vauldId: string, credential?: Credential) {
     const handleGeneratePassword = () => {
         const password = generatePassword()
         setSecret(password)
+        setSuccess('Generated random password')
     }
 
     return {
@@ -68,7 +71,7 @@ export function useCredential(vauldId: string, credential?: Credential) {
         description,
         secret,
         showSecret,
-        invalidMessage,
+        invalidName,
         handleNameChange,
         handleDescriptionChange,
         handleSecretChange,
