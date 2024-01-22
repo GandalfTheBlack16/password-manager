@@ -1,11 +1,11 @@
-import { FiPlus, FiTrash } from 'react-icons/fi'
-import { VaultItem } from "./VaultItem";
+import { FiPlus, FiTrash, FiX } from 'react-icons/fi'
 import { useVaults } from '../../hooks/useVaults';
 import './Vaults.css'
+import { Credentials } from './credential/Credentials';
 
 export function Vaults() {
 
-    const { vaultList, loading, handleAddCredential, handleCreateVault, handleRemoveVault } = useVaults()
+    const { vaultList, loading, filterValue, handleAddCredential, handleCreateVault, handleRemoveVault, handleFilterChange, clearFilter } = useVaults()
 
     return (
         <ul className="vault-list">
@@ -35,25 +35,28 @@ export function Vaults() {
                                         </button>
                                     </div>
                                 </section>
-                                {vault.credentials.length < 1 ? <div style={{ margin: '2rem auto 0', width: '100%' }}>
-                                    <h4 style={{fontWeight: '600', marginBlockEnd: '0'}}>Nothing stored here yet</h4>
-                                    <p>Get started creating a new credential</p>
-                                </div> :
-                                    <section className="vault-items">
-                                        {
-                                            vault.credentials.map(credential => {
-                                                return <VaultItem
-                                                    key={credential.id}
-                                                    id={credential.id}
-                                                    vaultId={vault.id}
-                                                    name={credential.name}
-                                                    description={credential.description}
-                                                    secret={credential.secret}
-                                                />
-                                            })
-                                        }
-                                    </section>
+                                {
+                                    vault.credentials.length > 0 && 
+                                    <div className='filter_container'>
+                                        <input 
+                                            type='text'
+                                            placeholder='Filter'
+                                            value={filterValue}
+                                            onChange={handleFilterChange}
+                                        />
+                                        <button
+                                            onClick={clearFilter}
+                                        >
+                                            <FiX className='icon'/>
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
                                 }
+                                <Credentials 
+                                    credentials={vault.credentials}
+                                    vaultId={vault.id}
+                                    filterValue={ filterValue }
+                                />
                             </li>
                         })
             }

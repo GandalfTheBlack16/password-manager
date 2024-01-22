@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { fetchVaults, deleteVault, createVault } from "../services/VaultService"
 import { useVaultStore } from "./stores/useVaultStore"
@@ -15,6 +15,8 @@ export function useVaults() {
     } = useVaultStore()
 
     const [loading, setLoading] = useState<boolean>(false)
+
+    const [filterValue, setFilterValue] = useState<string>('')
 
     const navigate = useNavigate()
 
@@ -67,11 +69,22 @@ export function useVaults() {
             })
     }
 
+    const handleFilterChange = (event: SyntheticEvent<HTMLInputElement>) => {
+        setFilterValue(event.currentTarget.value)
+    }
+
+    const clearFilter = () => {
+        setFilterValue('')
+    }
+
     return {
         vaultList,
         loading,
+        filterValue,
         handleAddCredential,
         handleRemoveVault,
-        handleCreateVault
+        handleCreateVault,
+        handleFilterChange,
+        clearFilter
     }
 }
