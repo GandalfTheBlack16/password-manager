@@ -23,19 +23,22 @@ export function useVaults() {
     const { setSuccess, setError, setConfirmMessage } = useToast()
 
     useEffect(() => {
-        if (!loadedOnce) {
-            setLoading(true)
-            fetchVaults()
-                .then(vaults => {
-                    setVaults(vaults)
-                })
-                .catch(err => {
-                    setError(err)
-                })
-                .finally(() => {
-                    setLoading(false)
-                })
-        }
+        const deferral = setTimeout(() => {
+            if (!loadedOnce) {
+                setLoading(true)
+                fetchVaults()
+                    .then(vaults => {
+                        setVaults(vaults)
+                    })
+                    .catch(err => {
+                        setError(err)
+                    })
+                    .finally(() => {
+                        setLoading(false)
+                    })
+            }
+        }, 100);
+        return () => { clearTimeout(deferral) }
     }, [setVaults, loadedOnce, setError])
 
     const handleAddCredential = (vaultId: string) => {
