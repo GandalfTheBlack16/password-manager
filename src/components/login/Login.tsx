@@ -14,6 +14,7 @@ export default function Login({ signUp = false }: LoginProps) {
         email,
         password,
         confirmPassword,
+        keepLoggedIn,
         invalidUser,
         invalidEmail,
         invalidPassword,
@@ -22,6 +23,7 @@ export default function Login({ signUp = false }: LoginProps) {
         onEmailChange,
         onPasswordChange,
         onConfirmPasswordChange,
+        onKeepLoggedInChange,
         handleLogin,
         handleSignup
     } = useLogin()
@@ -102,7 +104,18 @@ export default function Login({ signUp = false }: LoginProps) {
                 </label>
             }
             {
-                !signUp && <Link to='/restore-password'>Forgot your password?</Link>
+                !signUp && 
+                <div className="login-options">
+                    <label>
+                        <input
+                            type="checkbox" 
+                            checked={keepLoggedIn}
+                            onChange={onKeepLoggedInChange}
+                        />
+                        Keep me logged in
+                    </label>
+                    <Link to='/restore-password'>Forgot your password?</Link>
+                </div>
             }
             <button
                 disabled={invalidUser || invalidPassword}

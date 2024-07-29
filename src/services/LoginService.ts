@@ -6,11 +6,12 @@ const logginWithEmail = (value: string) => {
     return /^\S+@\S+\.\S+$/.test(value)
 }
 
-const loginRequest = async ({ username, password }: LoginServiceProps): Promise<LoginServiceData> => {
+const loginRequest = async ({ username, password, keepLoggedIn }: LoginServiceProps): Promise<LoginServiceData> => {
     const uri = BASE_URI + '/login'
     const payload = {
         ...(logginWithEmail(username) ? { email: username }: { username }),
-        password
+        password,
+        keepLoggedIn
     }
   
     const response = await fetch(uri, {

@@ -1,6 +1,7 @@
 export interface LoginServiceProps {
     username: string
     password: string
+    keepLoggedIn: boolean
 }
 
 export interface SignupServiceProps {

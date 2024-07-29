@@ -15,6 +15,7 @@ export function useLogin() {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [keepLoggedIn, setKeepLoggedIn] = useState<boolean>(false)
     const [invalidUser, setInvalidUser] = useState<boolean>(false)
     const [invalidEmail, setInvalidEmail] = useState<boolean>(false)
     const [invalidPassword, setInvalidPassword] = useState<boolean>(false)
@@ -60,6 +61,10 @@ export function useLogin() {
         })
     }
 
+    const onKeepLoggedInChange = () => {
+        setKeepLoggedIn((value) => !value)
+    }
+
     const validEmail = (email: string) => {
         if(!/^\S+@\S+\.\S+$/.test(email)) {
             setInvalidEmail(true)
@@ -103,7 +108,7 @@ export function useLogin() {
             setError('Password should have 6 characters at least')
             return
         }
-        loginRequest({ username, password })
+        loginRequest({ username, password, keepLoggedIn })
             .then((data) => {
                 const { accessToken, userInfo } = data
                 login(accessToken, userInfo.id, userInfo.username, userInfo.email)
@@ -158,6 +163,7 @@ export function useLogin() {
         email,
         password,
         confirmPassword,
+        keepLoggedIn,
         invalidUser,
         invalidEmail,
         invalidPassword,
@@ -166,6 +172,7 @@ export function useLogin() {
         onEmailChange,
         onPasswordChange,
         onConfirmPasswordChange,
+        onKeepLoggedInChange,
         handleLogin,
         handleSignup
     }
