@@ -61,3 +61,16 @@ export interface RecoveryEmailResponse {
     message: string;
     status:  string;
 }
+
+export interface DialogProps {
+    message: string;
+    type?: DialogType | string
+    onClose: () => void
+}
+
+export enum DialogType {
+    success = 'success',
+    warning = 'warning',
+    error = 'error',
+    info = 'info'
+}

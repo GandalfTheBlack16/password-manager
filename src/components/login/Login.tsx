@@ -2,6 +2,7 @@ import { FiUser, FiKey, FiMail } from "react-icons/fi"
 import { useLogin } from "../../hooks/useLogin"
 import { Link } from "react-router-dom"
 import './Login.css'
+import { Dialog } from "../ui/dialog/Dialog"
 
 type LoginProps = {
     signUp?: boolean
@@ -19,13 +20,16 @@ export default function Login({ signUp = false }: LoginProps) {
         invalidEmail,
         invalidPassword,
         invalidConfirmPassword,
+        error,
+        showErrorDialog,
         onUsernameChange,
         onEmailChange,
         onPasswordChange,
         onConfirmPasswordChange,
         onKeepLoggedInChange,
         handleLogin,
-        handleSignup
+        handleSignup,
+        closeDialog
     } = useLogin()
 
     return (
@@ -117,6 +121,14 @@ export default function Login({ signUp = false }: LoginProps) {
                     <Link to='/restore-password'>Forgot your password?</Link>
                 </div>
             }
+            {
+                showErrorDialog && 
+                <Dialog 
+                    message={error}
+                    type={'error'}
+                    onClose={closeDialog}
+                />
+            }   
             <button
                 disabled={invalidUser || invalidPassword}
             >{signUp ? 'Create account' : 'Login'}</button>

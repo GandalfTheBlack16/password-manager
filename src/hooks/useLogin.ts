@@ -3,13 +3,11 @@ import { loginRequest } from "../services/LoginService"
 import { useAuthStore } from "./stores/useAuthStore"
 import { useNavigate } from "react-router"
 import { signupRequest } from "../services/SignupService"
-import { useToast } from "./useToast"
 
 export function useLogin() {
 
     const navigate = useNavigate()
     const { login } = useAuthStore()
-    const { setError, setSuccess } = useToast()
 
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
@@ -20,6 +18,12 @@ export function useLogin() {
     const [invalidEmail, setInvalidEmail] = useState<boolean>(false)
     const [invalidPassword, setInvalidPassword] = useState<boolean>(false)
     const [invalidConfirmPassword, setInvalidConfirmPassword] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
+    const [showErrorDialog, setShowErrorDialog] = useState<boolean>(false)
+
+    const closeDialog = () => {
+        setShowErrorDialog(false)
+    }
 
     const onUsernameChange = (event: SyntheticEvent<HTMLInputElement>) => {
         setUsername(event.currentTarget.value)
@@ -102,10 +106,12 @@ export function useLogin() {
         event.preventDefault()
         if (!validUsername()) {
             setError('Username should have 4 characters at least or to be a valid email address')
+            setShowErrorDialog(true)
             return
         }
         if (!validPassword()) {
             setError('Password should have 6 characters at least')
+            setShowErrorDialog(true)
             return
         }
         loginRequest({ username, password, keepLoggedIn })
@@ -117,9 +123,11 @@ export function useLogin() {
             .catch(err => {
                 if (err === 'Unauthorized') {
                     setError('Invalid username/email address or password')
+                    setShowErrorDialog(true)
                 }
                 else {
                     setError(`Unexpected error on login request: ${err.message}`)
+                    setShowErrorDialog(true)
                 } 
             })
             .finally(() => {
@@ -132,24 +140,27 @@ export function useLogin() {
         
         if (!validUsername()) {  
             setError('Username should be 4 character length at least')
+            setShowErrorDialog(true)
            return
         }
         if (!validEmail(email)) {
             setError('Email should be a valid email address')
+            setShowErrorDialog(true)
             return
         }
         if (!validPassword()) {
             setError('Password should be 6 character length at least')
+            setShowErrorDialog(true)
             return
         }
         if(!validConfirmPassword()) {
             setError('Passwords don\'t match')
+            setShowErrorDialog(true)
             return
         }
         signupRequest({ username, email, password })
             .then(data => {
                 if (data.status === 'Success') {
-                    setSuccess(data.message)
                     setEmail('')
                     setPassword('')
                     setConfirmPassword('')
@@ -168,12 +179,15 @@ export function useLogin() {
         invalidEmail,
         invalidPassword,
         invalidConfirmPassword,
+        error,
+        showErrorDialog,
         onUsernameChange,
         onEmailChange,
         onPasswordChange,
         onConfirmPasswordChange,
         onKeepLoggedInChange,
         handleLogin,
-        handleSignup
+        handleSignup,
+        closeDialog
     }
 }

@@ -1,0 +1,44 @@
+.dialog-container {
+    display: flex;
+    flex-direction: row;
+    min-width: 280px;
+    width: fit-content;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 1.5em;
+    border-radius: 10px;
+    gap: 15px;
+}
+
+.dialog-info {
+    background-color: #2c2cdf57;
+}
+
+.dialog-success {
+    background-color: #19a6197d;
+}
+
+.dialog-warning {
+    background-color: #bcb30d94;
+}
+
+.dialog-error {
+    background-color: #b4171787;
+}
+
+.dialog-container span {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dialog-close {
+    padding: 1px;
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+}
+
+.dialog-close:hover {
+    background-color: transparent;
+}
