@@ -38,7 +38,8 @@ export function Vaults() {
                                 {
                                     vault.credentials.length > 0 && 
                                     <div className='filter_container'>
-                                        <input 
+                                        <input
+                                            autoFocus 
                                             type='text'
                                             placeholder='Filter'
                                             value={filterValue}

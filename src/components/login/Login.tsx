@@ -50,6 +50,7 @@ export default function Login({ signUp = false }: LoginProps) {
                     className='icon'
                 />
                 <input
+                    autoFocus
                     type="text"
                     name="username"
                     placeholder={!signUp ? "Username/email" : "Username"}
