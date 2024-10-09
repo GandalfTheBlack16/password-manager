@@ -1,5 +1,6 @@
 body {
   background-image: url(assets/background.jpg);
+  background-size: cover;
   color: white;
   font-family: 'Open Sans', sans-serif;
   font-family: 'Poppins', sans-serif;
@@ -18,19 +19,21 @@ body {
 }
 
 main {
-  background-color: #232d3f82;
+  background-color: #232d3f9e;
   min-width: 70%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  border-radius: 76px;
 }
 
-.logo {
-  margin: auto;
-  width: 350px;
+.logo-home {
+  width: 460px;
 }
 
-input[type=text], input[type=password], input[type=email] {
+input[type=text],
+input[type=password],
+input[type=email] {
   background-color: #0d5c70;
   border: 1px solid transparent;
   border-radius: 15px;
@@ -69,9 +72,10 @@ button:disabled:hover {
   main {
     padding: 1rem;
     font-size: 12px;
+    border-radius: 38px;
   }
 
-  .logo {
+  .logo-home {
     width: 100%;
   }
 
@@ -97,7 +101,8 @@ a {
   color: white;
 }
 
-h2,h3 {
+h2,
+h3 {
   margin-block-end: .5rem;
 }
 

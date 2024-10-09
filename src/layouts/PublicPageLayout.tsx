@@ -19,7 +19,7 @@ export function PublicPageLayout ({ children, hiddenFooter }: Props) {
     return (
         <>
             <Link to='/login'>
-                <img src={logo} className='logo'/>
+                <img src={logo} className='logo-home'/>
             </Link>
             <main>
                 { children }

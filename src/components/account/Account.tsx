@@ -35,6 +35,7 @@ export function Account() {
                         Username
                         <div>
                             <input
+                                autoFocus
                                 type="text"
                                 value={username}
                                 onChange={handleChangeUsername}

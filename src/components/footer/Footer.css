@@ -1,7 +1,7 @@
 footer {
     width: fit-content;
     margin: 2rem;
-    background-color: #232d3f63;
+    background-color: #232d3f9e;
     padding: 1rem 2rem;
     border-radius: 10px;
     transition: all 0.4s;
@@ -11,7 +11,7 @@ footer:hover {
     cursor: pointer;
     padding-right: 50px;
     background-color: #0d5c707e;
-    border: transparent;
+    border: solid 1.5px #232d3f9e;
 }
 
 footer a {
