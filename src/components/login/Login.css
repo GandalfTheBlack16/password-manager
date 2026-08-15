@@ -16,16 +16,17 @@
 
 .login_form .icon {
     font-size: 25px;
+    color: var(--primary);
 }
 
 ::placeholder {
-    color: #a9a9a9;
+    color: #93a4ba;
     font-weight: 300;
     font-style: oblique;
 }
 
 .login_form input {
-    padding: .7rem 1rem;
+    padding: .8rem 1rem;
     border-radius: 15px;
     font-size: medium;
     font-weight: 500;
@@ -33,7 +34,8 @@
 }
 
 .login_form input.invalid {
-    border: 2px solid #d10f0fc9;
+    border: 2px solid rgba(248, 113, 113, 0.9);
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
 }
 
 .login-options {
@@ -46,6 +48,7 @@
 
 .login-options input[type="checkbox"] {
     width: unset;
+    accent-color: var(--primary);
 }
 
 button {
@@ -60,11 +63,11 @@ button {
 }
 
 .validation_error span {
-    color: #990b0b;
+    color: var(--danger);
 }
 
 .validation_error span.success {
-    color: white;
+    color: var(--success);
     font-weight: 600;
 }
 

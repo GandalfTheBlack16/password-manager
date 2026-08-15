@@ -1,65 +1,122 @@
+:root {
+  color-scheme: dark;
+  --bg: #070b14;
+  --bg-accent: #111827;
+  --surface: rgba(15, 23, 42, 0.8);
+  --surface-strong: rgba(15, 23, 42, 0.96);
+  --surface-soft: rgba(30, 41, 59, 0.85);
+  --border: rgba(148, 163, 184, 0.2);
+  --text: #e5eef9;
+  --muted: #a8b5c7;
+  --primary: #7c9cff;
+  --primary-strong: #4f7cff;
+  --secondary: #22d3ee;
+  --success: #34d399;
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.12);
+  --shadow: 0 24px 60px rgba(2, 6, 23, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  background-image: url(assets/background.jpg);
-  background-size: cover;
-  color: white;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.12), transparent 24%),
+    linear-gradient(135deg, var(--bg) 0%, #0f172a 100%);
+  color: var(--text);
   font-family: 'Open Sans', sans-serif;
-  font-family: 'Poppins', sans-serif;
 }
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1.5rem 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 2rem;
-  border-radius: 20px;
 }
 
 main {
-  background-color: #232d3f9e;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
   min-width: 70%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  border-radius: 76px;
+  border-radius: 32px;
+  box-shadow: var(--shadow);
 }
 
 .logo-home {
   width: 460px;
+  max-width: 100%;
+  filter: drop-shadow(0 10px 25px rgba(124, 156, 255, 0.25));
 }
 
 input[type=text],
 input[type=password],
-input[type=email] {
-  background-color: #0d5c70;
-  border: 1px solid transparent;
+input[type=email],
+input[type=search],
+input {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 15px;
-  color: white;
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(124, 156, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(124, 156, 255, 0.18);
 }
 
 button {
   padding: .8rem 2rem;
   font-size: medium;
-  color: whitesmoke;
-  background-color: #133d64;
-  border: none;
-  border-radius: 20px;
+  color: #f8fafc;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+  border: 1px solid rgba(124, 156, 255, 0.28);
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 12px 24px rgba(79, 124, 255, 0.25);
 }
 
 button:hover {
   cursor: pointer;
-  background-color: #1d4469;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(79, 124, 255, 0.32);
 }
 
 button:disabled {
-  background-color: #415262;
+  background: rgba(148, 163, 184, 0.2);
+  box-shadow: none;
+  border-color: transparent;
 }
 
 button:disabled:hover {
   cursor: not-allowed;
+  transform: none;
 }
 
 @media (max-width: 425px) {
@@ -72,7 +129,7 @@ button:disabled:hover {
   main {
     padding: 1rem;
     font-size: 12px;
-    border-radius: 38px;
+    border-radius: 24px;
   }
 
   .logo-home {
@@ -98,7 +155,7 @@ button:disabled:hover {
 }
 
 a {
-  color: white;
+  color: var(--text);
 }
 
 h2,
@@ -114,33 +171,32 @@ h3 {
 .tooltip .tooltip_text {
   visibility: hidden;
   width: max-content;
-  background-color: #2f70ad;
+  background-color: rgba(15, 23, 42, 0.96);
+  border: 1px solid var(--border);
   font-size: 14px;
-  color: #fff;
+  color: var(--text);
   text-align: center;
   padding: 5px 10px;
-  border-radius: 6px;
+  border-radius: 10px;
   position: absolute;
   z-index: 1;
-  /*to change direction*/
   top: 125%;
   left: 50%;
   margin-left: -60px;
   opacity: 0;
   transition: all ease 0.4s;
+  box-shadow: var(--shadow);
 }
 
 .tooltip .tooltip_text::after {
   content: "";
   position: absolute;
-  /*to change direction*/
   bottom: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 7px;
   border-style: solid;
-  /*to change direction*/
-  border-color: transparent transparent #2f70ad transparent;
+  border-color: transparent transparent rgba(15, 23, 42, 0.96) transparent;
 }
 
 .tooltip:hover .tooltip_text {
@@ -149,9 +205,9 @@ h3 {
 }
 
 .toogle {
-  background-color: #2f70ad;
+  background-color: var(--primary);
 }
 
 .toogle:hover {
-  background-color: #2f70ad;
+  background-color: var(--primary-strong);
 }

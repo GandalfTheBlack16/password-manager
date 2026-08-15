@@ -1,17 +1,20 @@
 footer {
     width: fit-content;
-    margin: 2rem;
-    background-color: #232d3f9e;
+    margin: 2rem auto 0;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.2);
     padding: 1rem 2rem;
-    border-radius: 10px;
-    transition: all 0.4s;
+    border-radius: 18px;
+    transition: all 0.25s ease;
+    box-shadow: 0 16px 30px rgba(2, 6, 23, 0.28);
 }
 
 footer:hover {
     cursor: pointer;
     padding-right: 50px;
-    background-color: #0d5c707e;
-    border: solid 1.5px #232d3f9e;
+    background: rgba(124, 156, 255, 0.12);
+    border-color: rgba(124, 156, 255, 0.28);
+    transform: translateY(-1px);
 }
 
 footer a {
@@ -20,4 +23,5 @@ footer a {
     align-items: center;
     gap: .6rem;
     font-size: 14px;
+    color: var(--text);
 }

@@ -4,22 +4,29 @@ header {
   align-items: center;
   flex-direction: row;
   padding: 1rem 2rem;
-  background-color: #232d3f9e;
-  border-radius: 76px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 35px rgba(2, 6, 23, 0.28);
 }
 
 .logo {
   width: 30%;
+  min-width: 180px;
   padding: 0 2em;
 }
 
 .logo img {
   width: 100%;
+  filter: drop-shadow(0 10px 20px rgba(124, 156, 255, 0.18));
 }
 
 .main_menu {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .menu_item {
@@ -27,23 +34,26 @@ header {
   align-items: center;
   gap: 3px;
   font-size: 16px;
-  background-color: #133d6452;
-  border-radius: 20px;
-  padding: .4rem 1.5rem;
-  transition: all 0.4s;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 999px;
+  padding: .6rem 1.3rem;
+  transition: all 0.25s ease;
   text-decoration: none;
+  color: #e5eef9;
 }
 
 .menu_item:hover:not(.selected) {
   cursor: pointer;
   padding-right: 35px;
-  background-color: #0d5c707e;
-  border: transparent;
+  background: rgba(124, 156, 255, 0.14);
+  border-color: rgba(124, 156, 255, 0.3);
 }
 
 .menu_item.selected {
-  border: transparent;
-  background-color: #0d5c707e;
+  border-color: rgba(124, 156, 255, 0.35);
+  background: linear-gradient(135deg, rgba(124, 156, 255, 0.18), rgba(34, 211, 238, 0.14));
+  box-shadow: 0 8px 18px rgba(79, 124, 255, 0.18);
 }
 
 @media (max-width: 768px) {
@@ -57,16 +67,21 @@ header {
 
   .menu_item {
     font-size: 12px;
-    padding: .4rem 1rem;
+    padding: .5rem 1rem;
   }
 }
 
 @media (max-width: 425px) {
   header {
     flex-direction: column;
-    gap: .2rem;
+    gap: .8rem;
     padding: .8rem;
-    border-radius: 38px;
+    border-radius: 20px;
+  }
+
+  .logo {
+    width: auto;
+    padding: 0;
   }
 
   .logo img {
@@ -77,7 +92,7 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: .75rem;
   }
 
   .menu_item {
@@ -87,7 +102,7 @@ header {
 
 @media (max-width: 375px) {
   .menu_item {
-    padding: .3rem;
+    padding: .35rem .7rem;
     font-size: 10px;
   }
 }
