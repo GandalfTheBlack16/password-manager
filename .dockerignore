@@ -1,0 +1,12 @@
+node_modules
+dist
+.vite
+.env
+.env.*
+.DS_Store
+.git
+.gitignore
+npm-debug.log
+pnpm-debug.log
+.idea
+.vscode
