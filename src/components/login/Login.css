@@ -132,3 +132,60 @@ button {
         padding: .6rem;
     }
 }
+
+/* GitHub OAuth Styles */
+.divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: 14px;
+    margin: .5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.2);
+}
+
+.github-login-btn {
+    width: 180px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: rgba(60, 66, 81, 0.8) !important;
+    border-color: rgba(148, 163, 184, 0.3) !important;
+    transition: all 0.25s ease;
+}
+
+.github-login-btn:hover {
+    background: rgba(60, 66, 81, 1) !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+.github-icon {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .github-login-btn {
+        width: 80% !important;
+        font-size: 14px;
+    }
+
+    .divider {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .github-login-btn {
+        width: 100% !important;
+        font-size: 12px;
+    }
+}
