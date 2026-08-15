@@ -1,6 +1,8 @@
 import { FiUser, FiKey, FiMail } from "react-icons/fi"
+import { FiGithub } from "react-icons/fi"
 import { useLogin } from "../../hooks/useLogin"
 import { Link } from "react-router-dom"
+import { startGitHubLogin } from "../../services/GitHubOAuthService"
 import './Login.css'
 
 type LoginProps = {
@@ -121,6 +123,23 @@ export default function Login({ signUp = false }: LoginProps) {
             <button
                 disabled={invalidUser || invalidPassword}
             >{signUp ? 'Create account' : 'Login'}</button>
+
+            {!signUp && (
+                <>
+                    <div className="divider">
+                        <span>or</span>
+                    </div>
+                    <button
+                        type="button"
+                        className="github-login-btn"
+                        onClick={startGitHubLogin}
+                        title="Login with GitHub"
+                    >
+                        <FiGithub className="github-icon" />
+                        Login with GitHub
+                    </button>
+                </>
+            )}
         </form>
     )
 }

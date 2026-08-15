@@ -9,6 +9,7 @@ import { CredentialForm } from "./components/vaults/credential/CredentialForm";
 import { useVaultStore } from "./hooks/stores/useVaultStore";
 import { ChangeCredentialForm } from './components/account/credentials/ChangeCredentialForm';
 import { RestorePasswordPage } from "./pages/restore-password";
+import GitHubCallback from "./pages/github-callback";
 
 export const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
           path: '', element: <PublicPageLayout hiddenFooter><RestorePasswordPage /></PublicPageLayout>
         }
       ]
+    },
+    {
+      path: '/auth/github/callback',
+      element: <PublicPageLayout hiddenFooter><GitHubCallback /></PublicPageLayout>
     },
     {
       path: '/logout',
